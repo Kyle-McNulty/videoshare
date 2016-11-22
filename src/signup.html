@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <title>Video Share</title>
+        <link rel="icon" href="img/page-icon.png">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script defer src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+        <script defer src="lib/md5.min.js"></script>
+        <script defer src="js/common.js"></script>
+        <script defer src="js/signup.js"></script>      
+    </head>
+    <body>
+        <div class="container">
+            <h1>Sign Up</h1>
+
+            <p class="loading hidden">Loading...</p>
+
+            <form id="signup-form">
+                <div>
+                    <label for="email-input">Email:</label>
+                    <input id="email-input" 
+                        type="email" 
+                        placeholder="your email address"
+                        autofocus>
+                </div>
+
+                <div>
+                    <label for="password-input">Password:</label>
+                    <input id="password-input" 
+                        type="password"
+                        placeholder="enter your new password">
+                </div>
+
+                <div>
+                    <label for="confirm-password-input">Confirm Password:</label>
+                    <input id="confirm-password-input" 
+                        type="password"
+                        placeholder="enter your password again">
+                </div>
+
+                <div>
+                    <label for="display-name-input">Display Name:</label>
+                    <input id="display-name-input" 
+                        type="text"
+                        placeholder="your display name">
+                </div>
+
+                <span id="error-message"></span>
+
+                <div>
+                    <button type="submit">Sign Up</button>
+                </div>
+                
+            </form>
+
+            <p>Already have an account? <a href="index.html">Sign In</a></p>
+        </div>
+    </body>
+</html>
