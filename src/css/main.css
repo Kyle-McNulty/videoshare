@@ -1,0 +1,138 @@
+/*
+Calvin Korver
+Info 343
+Services Challenge
+11-2-16
+*/
+
+body, input, button {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+
+input {
+    width: 90%;
+    padding-left:10px;
+    padding: 0.5rem;
+}
+
+form > div {
+    margin-bottom: 1rem;
+}
+
+.task-list {
+    padding-left: 0;
+}
+
+.gravatarPhoto {
+    height: 20px;
+    width: 20px;
+}
+
+.demo-list-icon {
+	width: 300px;
+}
+
+.displayName {
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+.message-creation {
+    font-style: italic;
+    padding-right: 5px;
+}
+
+.container {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+button {
+    padding: 0.5rem;
+}
+
+.credential-entry {
+    width: 100%;
+    position: block !important;
+}
+
+.mdl-layout__drawer-button {
+    padding-top:12px;;
+}
+
+.mdl-layout__header-row {
+    background-color: teal;
+}
+
+.mdl-layout__content {
+    margin:30px;
+}
+
+.mdl-button--raised {
+    color: red;
+    margin:10px;
+    padding:10px;
+}
+
+.new-message-title {
+    margin:10px;
+}
+/* For pop up card from https://getmdl.io/components/index.html#cards-section*/
+.demo-card-square.mdl-card {
+  width: 320px;
+  height: 320px;
+}
+.demo-card-square > .mdl-card__title {
+  color: #fff;
+  background:
+    url('../assets/demos/dog.png') bottom right 15% no-repeat #46B6AC;
+}
+
+.demo-layout-transparent {
+  background: lightgrey center / cover;
+}
+.demo-layout-transparent .mdl-layout__header,
+.demo-layout-transparent .mdl-layout__drawer-button {
+  /* This background is dark, so we set text to white. Use 87% black instead if
+     your background is light. */
+  color: black;
+}
+
+.gravatar-photo {
+    width:30px;
+    height: 30px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+#header-div {
+    
+    margin-left: 25px;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
