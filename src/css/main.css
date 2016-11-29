@@ -8,6 +8,7 @@ Services Challenge
 body, input, button {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
+    display: flex;
 }
 
 input {
@@ -135,4 +136,27 @@ button {
 
   /* Support for IE. */
   font-feature-settings: 'liga';
+}
+
+
+/* Courtesy of Alexander Gaziev */
+
+.file_input_div {
+  margin: auto;
+  width: 250px;
+  height: 40px;
+}
+
+.file_input {
+  float: left;
+}
+
+#file_input_text_div {
+  width: 200px;
+  margin-top: -8px;
+  margin-left: 5px;
+}
+
+.none {
+  display: none;
 }
