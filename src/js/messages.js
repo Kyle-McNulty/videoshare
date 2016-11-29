@@ -11,6 +11,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     //if there is an authenticated user...
     if (user) {
         currentUser = user;
+        // console.log(currentUser.uid);
     } else {
         firebase.auth().signInWithRedirect(authProvider);
         window.location = "index.html";
@@ -30,15 +31,16 @@ var storage = firebase.storage();
 
 /* Files upload stuff */
 
+
+
 function handleFiles(fileList) {
     /* Iterates over the returned FileList object */
     for (var i = 0; i < fileList.length; i++) {
         var file = fileList[i];
-        var storageRef = storage.ref("videos/" + file.name);
-        var metadata = {
-            owner: "TEST"
-        };
-        var uploadTask = storageRef.put(file, metadata);
+
+        var storageRef = storage.ref(currentUser.uid + "/" + file.name);
+
+        var uploadTask = storageRef.put(file);
 
         uploadTask.on("state_changed", function(snapshot) {
             // Observe state change events such as progress, pause, and resume
