@@ -23,6 +23,8 @@ document.getElementById("sign-out-button").addEventListener("click", function ()
 });
 
 var storage = firebase.storage();
+var videoFeed = document.querySelector(".video-feed");
+
 
 
 // var mountainsRef = storageRef.child('stevens.jpg');
@@ -106,3 +108,9 @@ function changeState() {
     }
   }
 }
+
+/* Changes the page to profile page from button input in nav bar */
+document.getElementById("profile-page-button").addEventListener("click", function (){
+  console.log("Changing page");
+  window.location = "../profile.html";
+});

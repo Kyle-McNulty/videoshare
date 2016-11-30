@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Profile Page</title>
+
+	<link rel="stylesheet" href="css/main.css">
+	<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+	<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.deep_purple-pink.min.css" />
+
+	<!-- Material Design icon font -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+
+	<!--Header element-->
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title">
+					Xtreme Videos
+				</span>
+			</div>
+		</header>
+
+		<!--Hamburger Drawer Menu-->
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">Main Menu</span>
+			<nav class="mdl-navigation">
+				<button id="feed-page-button" class="mdl-button mdl-js-button"> Video Feed
+				</button>
+
+				<button id="profile-page-button" class="mdl-button mdl-js-button">
+				My Profile
+				</button>
+
+			</nav>
+			<span class="mdl-layout-title">User Options</span>
+
+			<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out</button>
+		</div>
+
+		<body>
+
+			<!--Main Content for the Page-->
+			<main class="mdl-layout__content">
+				<div class="page-content">
+					<h1></h1>
+
+
+				</div>
+			</main>
+		</body>
+
+</html>
+
+
+
+<!--Firebase JavaScript library-->
+<script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
+<!--Moment.js library (http://momentjs.com/) for formatting dates-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment-with-locales.min.js"></script>
+<!--our application script-->
+<script src="js/common.js"></script>
+<script src="js/profile.js"></script>

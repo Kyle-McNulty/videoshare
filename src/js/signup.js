@@ -40,7 +40,8 @@ signUpForm.addEventListener("submit", function(evt) {
                 return user.updateProfile({
                     emailVerified: false,
                     displayName: displayNameInput.value,
-                    photoURL: "https://www.gravatar.com/avatar/" + md5(emailInput)
+                    photoURL: "https://www.gravatar.com/avatar/" + 
+                    md5(emailInput)
                 });
             })
             .then(function() {

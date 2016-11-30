@@ -28,14 +28,14 @@ Services Challenge
 
 		<!--Hamburger Drawer Menu-->
 		<div class="mdl-layout__drawer">
-			<span class="mdl-layout-title">Menu</span>
+			<span class="mdl-layout-title">Main Menu</span>
 			<nav class="mdl-navigation">
-				<button id="general-button" class="mdl-button mdl-js-button"> Browse
+				<button id="feed-page-button" class="mdl-button mdl-js-button"> Video Feed
 				</button>
-				<button id="random-button" class="mdl-button mdl-js-button">Upload
+				<button id="profile-page-button" class="mdl-button mdl-js-button" onClick="this.changeToProfilePage">My Profile
 				</button>
 				</nav>
-				<span class="mdl-layout-title">Upload</span>
+				<span class="mdl-layout-title">User Options</span>
 				<button type="button"  class ="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out</button>
 			
 		</div>
@@ -87,7 +87,9 @@ Services Challenge
 
 					<div class="container">
 						<h2 id="header-div"> Video Feed </h2>
-					</div>
+						
+						<ul class="video-feed">
+						</ul>
 				</div>
 			</main>
 		
