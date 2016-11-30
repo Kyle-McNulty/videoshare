@@ -1,9 +1,4 @@
-/*
-Calvin Korver
-Info 343
-Services Challenge
-11-2-16
-*/
+
 
 var currentUser;
 var authProvider = new firebase.auth.GithubAuthProvider();
@@ -35,8 +30,8 @@ var storage = firebase.storage();
 
 function handleFiles(fileList) {
     /* Iterates over the returned FileList object */
-    for (var i = 0; i < fileList.length; i++) {
-        var file = fileList[i];
+    console.log("the list is ", fileList);
+        var file = fileList[0];
 
         var storageRef = storage.ref(currentUser.uid + "/" + file.name);
 
@@ -63,7 +58,6 @@ function handleFiles(fileList) {
             var downloadURL = uploadTask.snapshot.downloadURL;
             console.log(downloadURL);
             });
-    }
 }
 
 var generalRef = firebase.database().ref("general");
@@ -105,4 +99,17 @@ function changeState() {
       fileInputTextDiv.classList.remove('is-focused');
     }
   }
+}
+
+
+
+
+function renderMovie(snapshot){
+
+
+}
+
+function render(snapshot){
+
+
 }
