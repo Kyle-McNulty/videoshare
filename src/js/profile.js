@@ -7,14 +7,13 @@ firebase.auth().onAuthStateChanged(function (user) {
     //if there is an authenticated user...
     if (user) {
         currentUser = user;
-        loadPage();
-        // console.log(currentUser);
+        loadPage(currentUser);
     } else {
         firebase.auth().signInWithRedirect(authProvider);
         window.location = "index.html";
     }
 });
-
+//console.log(currentUser);
 document.getElementById("sign-out-button").addEventListener("click", function (){
     firebase.auth().signOut();
 });
@@ -30,21 +29,30 @@ document.getElementById("feed-page-button").addEventListener("click", function (
 
 var page = document.getElementById("page-content");
 
-var li = document.createElement("li");  //create an <li> element
-li.className += " mdl-list__item";
+function loadPage(user) {
+    console.log(user);
 
-function loadPage() {
-console.log(currentUser);
-  
+    var info = document.createElement("span");
+
+    var gravatarPhoto = document.createElement("img");
+    gravatarPhoto.classList += " userPhoto";
+    gravatarPhoto.src = currentUser.photoURL;
+    info.appendChild(gravatarPhoto);
+
+    var name = document.createElement("h1");
+    name.classList += " userName";
+    name.textContent = user.displayName;
+    info.appendChild(name);
+
+    page.append(info);
+
+    //render videos here
+}   
+
+function render(snapshot) {
 }
-    // /* Creating image avatar */
-    // var gravatarPhoto = document.createElement("img");
-    // gravatarPhoto.src = currentUser.photoURL;
-    // console.log(gravatarPhoto.source);
 
 
-    // gravatarPhoto.className += " gravatar-photo";
-    // li.append(gravatarPhoto);
 
 
 

@@ -198,3 +198,14 @@ button {
 .none {
   display: none;
 }
+
+
+/* profile styling */
+.userName {
+    display: inline-block;
+    margin-left: 200px;
+}
+
+.userPhoto {
+    display: inline-block;
+}
