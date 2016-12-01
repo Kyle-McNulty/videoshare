@@ -42,24 +42,16 @@ var randomRef = firebase.database().ref("random");
     // Handle any errors
   });
 
-
-
   var videoList = document.querySelector(".video-list");
 
-
-
-  // console.log(currentRef);
-
-
   function handleFiles(fileList) {
-    /* Iterates over the returned FileList object */
+    if (currentUser.emailVerified) {
+      /* Iterates over the returned FileList object */
     console.log("the list is ", fileList);
     var file = fileList[0];
     console.log("file is ",file);
     var storageRef = storage.ref(currentUser.uid + "/" + file.name);
     var uploadTask = storageRef.put(file);    // upload the file into storage
-
-    if (currentUser.emailVerified) {
       var info = {
         createdOn: firebase.database.ServerValue.TIMESTAMP, //when created, filled in by Firebase
         fileName: file.name,
@@ -71,6 +63,8 @@ var randomRef = firebase.database().ref("random");
         }
       };
       personalRef.push(info);
+    } else {
+      alert("You must verify your email before uploading"); //need to implement some more of this functionality
     }
 
     uploadTask.on("state_changed", function (snapshot) {
@@ -137,6 +131,7 @@ var randomRef = firebase.database().ref("random");
     }
   }
 
+
   function renderMovie(snapshot) {
 
     var element = snapshot.val();
@@ -151,25 +146,24 @@ var randomRef = firebase.database().ref("random");
     video.setAttribute("height", "240");
 
     var source = document.createElement('source');
-    source.setAttribute('src', 'http://www.tools4movies.com/trailers/1012/Kill%20Bill%20Vol.3.mp4'); // should revise
+    source.setAttribute('src', "https://firebasestorage.googleapis.com/v0/b/videoshare-a2211.appspot.com/o/" + 
+      element.uid + "%2F" + element.fileName); //also need the "token" on here
     video.appendChild(source);
     video.play();
-    var titileDiv = document.createElement("div");
-    titileDiv.setAttribute("class", "mdl-card__title");
-    var titile = document.createElement("h4");
-    titile.setAttribute("class", "mdl-card__title-text");
-    titile.innerHTML = "";  // titile for each video
+    var titleDiv = document.createElement("div");
+    titleDiv.setAttribute("class", "mdl-card__title");
+    var title = document.createElement("h4");
+    title.setAttribute("class", "mdl-card__title-text");
+    title.innerHTML = "";  // title for each video
 
-    titileDiv.appendChild(titile);
+    titleDiv.appendChild(title);
     media.appendChild(video);
     cell.appendChild(media);
-    cell.appendChild(titileDiv);
+    cell.appendChild(titleDiv);
 
   }
 
-  // function render(snapshot) {
-  //   chatList.innerHTML = "";
-  //   snapshot.forEach(renderChat);
-  // }
-
->>>>>>> origin/Patrick-Messaging
+  function render(snapshot) {
+    chatList.innerHTML = "";
+    snapshot.forEach(renderMovie);
+  }
