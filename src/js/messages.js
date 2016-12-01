@@ -56,18 +56,18 @@ var randomRef = firebase.database().ref("random");
       download: uploadTask.snapshot.downloadURL
     }
     var uploadTask = storageRef.put(info);    // upload the file into storage
-    // var info = {
-    //   createdOn: firebase.database.ServerValue.TIMESTAMP, //when created, filled in by Firebase
-    //   //fileName: file.name,
-    //   fileName: uploadTask.snapshot.downloadURL,
-    //   createdBy: {
-    //     uid: currentUser.uid, //the unique user id
-    //     displayName: currentUser.displayName, //the user's display name
-    //     email: currentUser.email, //the user's email address
-    //     emailHashing: currentUser.photoURL, // 
-    //   }
-    // };
-    // personalRef.push(info);
+    var info = {
+      createdOn: firebase.database.ServerValue.TIMESTAMP, //when created, filled in by Firebase
+      //fileName: file.name,
+      fileName: uploadTask.snapshot.downloadURL,
+      createdBy: {
+        uid: currentUser.uid, //the unique user id
+        displayName: currentUser.displayName, //the user's display name
+        email: currentUser.email, //the user's email address
+        emailHashing: currentUser.photoURL, // 
+      }
+    };
+    personalRef.push(info);
     } else {
       alert("You must verify your email before uploading"); //need to implement some more of this functionality
     }
@@ -174,4 +174,4 @@ var randomRef = firebase.database().ref("random");
     snapshot.forEach(renderMovie);
   }
 
-currentRef.on("value", render);
+personalRef.limitToLast(100).on("value", render);
