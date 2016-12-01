@@ -175,4 +175,10 @@ var randomRef = firebase.database().ref("random");
     snapshot.forEach(renderMovie);
   }
 
+  /* Changes the page to profile page from button input in nav bar */
+document.getElementById("profile-page-button").addEventListener("click", function (){
+  console.log("Changing page");
+  window.location = "../profile.html";
+});
+
 personalRef.limitToLast(100).on("value", render);
