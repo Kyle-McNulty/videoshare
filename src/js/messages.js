@@ -155,7 +155,7 @@ var randomRef = firebase.database().ref("random");
     console.log(element);
     source.setAttribute('src', element.downloadURL);
     video.appendChild(source);
-    video.play();
+    //video.play();
     var titleDiv = document.createElement("div");
     titleDiv.setAttribute("class", "mdl-card__title");
     var title = document.createElement("h4");
