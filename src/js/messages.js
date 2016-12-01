@@ -51,22 +51,26 @@ var randomRef = firebase.database().ref("random");
     var file = fileList[0];
     console.log("file is ",file);
     var storageRef = storage.ref(currentUser.uid + "/" + file.name);
-    var uploadTask = storageRef.put(file);    // upload the file into storage
-    var info = {
-      createdOn: firebase.database.ServerValue.TIMESTAMP, //when created, filled in by Firebase
-      fileName: file.name,
-      downloadURL: uploadTask.snapshot.downloadURL,
-      createdBy: {
-        uid: currentUser.uid, //the unique user id
-        displayName: currentUser.displayName, //the user's display name
-        email: currentUser.email, //the user's email address
-        emailHashing: currentUser.photoURL, // 
-      }
-    };
-    personalRef.push(info);
+    var uploadTask = storageRef.put(file); // adding to the storage 
+      uploadTask.then(function() { // adding to the database
+        // console.log(uploadTask.snapshot);
+        var info = {
+          createdOn: firebase.database.ServerValue.TIMESTAMP, //when created, filled in by Firebase
+          fileName: file.name,
+          downloadURL: uploadTask.snapshot.downloadURL,
+          createdBy: {
+            uid: currentUser.uid, //the unique user id
+            displayName: currentUser.displayName, //the user's display name
+            email: currentUser.email, //the user's email address
+            emailHashing: currentUser.photoURL, // 
+          }
+        };
+        personalRef.push(info);
+      })    // upload the file into storage
     } else {
       alert("You must verify your email before uploading"); //need to implement some more of this functionality
     }
+    
 
     uploadTask.on("state_changed", function (snapshot) {
       // Observe state change events such as progress, pause, and resume
@@ -142,7 +146,7 @@ var randomRef = firebase.database().ref("random");
     var media = document.createElement("div");
     media.setAttribute("class", "mdl-card__media");
     var video = document.createElement("video");
-    //video.setAttribute("control");
+    video.setAttribute("controls", "true");
     video.setAttribute("width", "320");  // should change
     video.setAttribute("height", "240");
 
@@ -163,6 +167,7 @@ var randomRef = firebase.database().ref("random");
     cell.appendChild(media);
     cell.appendChild(titleDiv);
 
+    videoList.appendChild(cell);
   }
 
   function render(snapshot) {
