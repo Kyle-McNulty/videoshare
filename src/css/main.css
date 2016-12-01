@@ -23,6 +23,10 @@ h1 {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.content-grid {
+    max-width: 1300px;
+}
+
 .indexBody {
     color: #FFF;
     background-image: linear-gradient(to bottom, #bbb, #000);
@@ -147,8 +151,11 @@ button {
 }
 
 #header-div {
-    
-    margin-left: 25px;
+    text-align: center;
+}
+
+div {
+    display: flex;
 }
 
 .material-icons {

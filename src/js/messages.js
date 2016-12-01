@@ -142,7 +142,8 @@ var randomRef = firebase.database().ref("random");
     var element = snapshot.val();
 
     var cell = document.createElement("div");
-    cell.setAttribute("class", "mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp");
+    cell.setAttribute("class", "mdl-cell mdl-cell--12-col mdl-cell--12-col-phone mdl-card mdl-shadow--3dp");
+
     var media = document.createElement("div");
     media.setAttribute("class", "mdl-card__media");
     var video = document.createElement("video");
