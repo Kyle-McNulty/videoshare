@@ -51,14 +51,10 @@ var randomRef = firebase.database().ref("random");
     var file = fileList[0];
     console.log("file is ",file);
     var storageRef = storage.ref(currentUser.uid + "/" + file.name);
-    var info = {
-      file: file,
-      download: uploadTask.snapshot.downloadURL
-    }
-    var uploadTask = storageRef.put(info);    // upload the file into storage
+    var uploadTask = storageRef.put(file);    // upload the file into storage
     var info = {
       createdOn: firebase.database.ServerValue.TIMESTAMP, //when created, filled in by Firebase
-      //fileName: file.name,
+      fileName: file.name,
       downloadURL: uploadTask.snapshot.downloadURL,
       createdBy: {
         uid: currentUser.uid, //the unique user id
