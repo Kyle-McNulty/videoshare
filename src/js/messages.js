@@ -59,7 +59,7 @@ var randomRef = firebase.database().ref("random");
     var info = {
       createdOn: firebase.database.ServerValue.TIMESTAMP, //when created, filled in by Firebase
       //fileName: file.name,
-      fileName: uploadTask.snapshot.downloadURL,
+      downloadURL: uploadTask.snapshot.downloadURL,
       createdBy: {
         uid: currentUser.uid, //the unique user id
         displayName: currentUser.displayName, //the user's display name
@@ -153,7 +153,7 @@ var randomRef = firebase.database().ref("random");
     var source = document.createElement('source');
     console.log("element is: ");
     console.log(element);
-    source.setAttribute('src', element.fileName);
+    source.setAttribute('src', element.downloadURL);
     video.appendChild(source);
     video.play();
     var titleDiv = document.createElement("div");
