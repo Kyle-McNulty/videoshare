@@ -140,16 +140,16 @@ var randomRef = firebase.database().ref("random");
   function renderMovie(snapshot) {
 
     var element = snapshot.val();
-
     var cell = document.createElement("div");
-    cell.setAttribute("class", "mdl-cell mdl-cell--12-col mdl-cell--12-col-phone mdl-card mdl-shadow--3dp");
+    cell.setAttribute("class", "demo-card-wide mdl-card mdl-shadow--2dp video-cell");
+    
 
     var media = document.createElement("div");
     media.setAttribute("class", "mdl-card__media");
     var video = document.createElement("video");
     video.setAttribute("controls", "true");
-    video.setAttribute("width", "320");  // should change
-    video.setAttribute("height", "240");
+    video.setAttribute("width", "100%");  // should change
+    video.setAttribute("height", "90%");
 
     var source = document.createElement('source');
     console.log("element is: ");
@@ -159,14 +159,21 @@ var randomRef = firebase.database().ref("random");
     //video.play();
     var titleDiv = document.createElement("div");
     titleDiv.setAttribute("class", "mdl-card__title");
-    var title = document.createElement("h4");
+    var title = document.createElement("h2");
     title.setAttribute("class", "mdl-card__title-text");
-    title.innerHTML = "";  // title for each video
+    title.innerHTML = element.fileName.substring(0, element.fileName.length - 4);  // title for each video
+
+    var descriptionDiv = document.createElement("div");
+    descriptionDiv.setAttribute("class", "mdl-card__supporting-text")
+    var description = document.createElement("p");
+    description.innerHTML = "This is a description of the video that can be added in by the user using the metadata property";
+    descriptionDiv.appendChild(description);
 
     titleDiv.appendChild(title);
     media.appendChild(video);
     cell.appendChild(media);
     cell.appendChild(titleDiv);
+    cell.appendChild(descriptionDiv);
 
     videoList.appendChild(cell);
   }

@@ -150,9 +150,20 @@ button {
     border-radius: 5px;
 }
 
-#header-div {
-    text-align: center;
+/* Video Card Container */
+.demo-card-wide.mdl-card {
+    margin:20px;
+  width: 512px;
 }
+
+.mdl-card__media {
+    background-color: black !important;
+}
+
+.video-cell {
+    vertical-align: center;
+}
+
 
 div {
     display: flex;
