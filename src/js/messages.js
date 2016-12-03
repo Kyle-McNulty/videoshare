@@ -49,7 +49,8 @@ function handleFiles(fileList) {
           displayName: currentUser.displayName, //the user's display name
           email: currentUser.email, //the user's email address
           emailHashing: currentUser.photoURL, // 
-        }
+        },
+        comments: []
       };
       personalRef.push(info);
     })    // upload the file into storage
@@ -84,8 +85,28 @@ function handleFiles(fileList) {
  *  
  **/
 function handleDelete(element) {
+  console.log(element);
+  if (element.createdBy.uid != currentUser.uid) {
+    alert("You cant change or delete a message that isn't yours");
+    return;
+  }
+  var dialog = document.querySelector('.mdl-dialog');
 
+  /* If no support for dialogs */
+  if (!dialog.showModal) {
+    dialogPolyfill.registerDialog(dialog);
+  }
 
+  dialog.showModal();
+
+  dialog.querySelector('.delete').addEventListener('click', function () {
+    snapshot.ref.remove();
+    dialog.close();
+  });
+
+  dialog.querySelector('.close').addEventListener('click', function () {
+    dialog.close();
+  });
 }
 
 
@@ -149,7 +170,18 @@ function renderMovie(snapshot) {
   var comment_div = document.createElement("div");
   comment_div.setAttribute("class", "mdl-textfield mdl-js-textfield");
   var comment_input = document.createElement("input");
-  // comment_input.addEventListener("change", addingComment);
+
+  /* Adds the user commenting to the array in the object */
+  comment_input.addEventListener("change", function() {
+    var input = comment_input.value;
+    var tempArray = element.comments;
+    tempArray.push(input);
+
+    snapshot.ref.update({
+      comments: tempArray
+    });
+  });
+
   comment_input.setAttribute("class", "mdl-textfield__input");
   comment_input.setAttribute("type", "text");
   comment_input.setAttribute("id", "sample1");
@@ -163,11 +195,9 @@ function renderMovie(snapshot) {
   feedback.appendChild(like);
   feedback.appendChild(comment);
 
-  // eventListener addingComment
-  // function addingComment() {
-  //   var input = comment_input.value;
-  //   console.log(input);
-  //   // element.comment.push(input);
+  // function addingComment(element) {
+  //   // alert("adding comment");
+    
   //   // refresh the page
   // }
 
