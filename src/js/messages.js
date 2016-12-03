@@ -139,6 +139,41 @@ function renderMovie(snapshot) {
   var cell = document.createElement("div");
   cell.setAttribute("class", "demo-card-wide mdl-card mdl-shadow--2dp video-cell");
 
+  // adding favorite and comment input
+  var feedback = document.createElement("div");
+  var like = document.createElement("i");
+  like.innerHTML = "favorite";
+  like.setAttribute("class", "material-icons");
+  var comment = document.createElement("form");
+  comment.setAttribute("action", "#");
+  var comment_div = document.createElement("div");
+  comment_div.setAttribute("class", "mdl-textfield mdl-js-textfield");
+  var comment_input = document.createElement("input");
+  // comment_input.addEventListener("change", addingComment);
+  comment_input.setAttribute("class", "mdl-textfield__input");
+  comment_input.setAttribute("type", "text");
+  comment_input.setAttribute("id", "sample1");
+  var comment_label = document.createElement("label");
+  comment_label.setAttribute("class", "mdl-textfield__label");
+  comment_label.setAttribute("for", "sample1");
+  comment_div.appendChild(comment_input);
+  comment_div.appendChild(comment_label);
+  comment.appendChild(comment_div);
+
+  feedback.appendChild(like);
+  feedback.appendChild(comment);
+
+  // eventListener addingComment
+  // function addingComment() {
+  //   var input = comment_input.value;
+  //   console.log(input);
+  //   // element.comment.push(input);
+  //   // refresh the page
+  // }
+
+
+
+
   /* Handles creation of the video element */
   var media = document.createElement("div");
   var source = document.createElement('source');
@@ -197,6 +232,7 @@ function renderMovie(snapshot) {
   cell.appendChild(media);
   cell.appendChild(titleDiv);
   cell.appendChild(authorDiv);
+  cell.appendChild(feedback);
   cell.appendChild(buttonDiv);
   // cell.appendChild(descriptionDiv);
 
