@@ -194,11 +194,14 @@ div {
   font-feature-settings: 'liga';
 }
 
+#feed-header {
+    vertical-align: center;
+}
+
 
 /* Courtesy of Alexander Gaziev */
 
 .file_input_div {
-  margin: auto;
   width: 250px;
   height: 40px;
 }
