@@ -21,41 +21,27 @@ var storage = firebase.storage();
 var personalRef = firebase.database().ref("personal");
 var randomRef = firebase.database().ref("random");
 
-
-// var mountainsRef = storageRef.child('stevens.jpg');
-// var mountainImagesRef = storageRef.child('images/stevens.jpg');
-
-
 /* Files upload stuff */
-
-
-
 var currentRef = storage.ref();
-
-currentRef.child("videos/stevens.jpg").getDownloadURL().then(function (url) {
-  // Get the download URL for 'images/stars.jpg'
-  // This can be inserted into an <img> tag
-  // This can also be downloaded directly
-  console.log(url);
-
-}).catch(function (error) {
-  // Handle any errors
-});
 
 var videoList = document.querySelector(".video-list");
 
 function handleFiles(fileList) {
   if (currentUser.emailVerified) {
+    
     /* Iterates over the returned FileList object */
-    console.log("the list is ", fileList);
     var file = fileList[0];
-    console.log("file is ", file);
+    var fileName = file.name;
+    if (fileName.substring(fileName.length - 3, fileName.length) !== ("mp4")) {
+      alert("File must be of the mp4");
+      return;
+    }
+
     var storageRef = storage.ref(currentUser.uid + "/" + file.name);
     var uploadTask = storageRef.put(file); // adding to the storage 
     uploadTask.then(function () { // adding to the database
-      // console.log(uploadTask.snapshot);
       var info = {
-        createdOn: firebase.database.ServerValue.TIMESTAMP, //when created, filled in by Firebase
+        createdOn: firebase.database.ServerValue.TIMESTAMP,
         fileName: file.name,
         downloadURL: uploadTask.snapshot.downloadURL,
         createdBy: {
@@ -68,7 +54,7 @@ function handleFiles(fileList) {
       personalRef.push(info);
     })    // upload the file into storage
   } else {
-    alert("You must verify your email before uploading"); //need to implement some more of this functionality
+    alert("You must verify your email before uploading");
   }
 
 
@@ -86,10 +72,8 @@ function handleFiles(fileList) {
         break;
     }
   }, function (error) {
-    // Handle unsuccessful uploads
+    alert(error);
   }, function () {
-    // Handle successful uploads on complete
-    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
     var downloadURL = uploadTask.snapshot.downloadURL;
     console.log(downloadURL);
   });
@@ -138,7 +122,7 @@ function changeState() {
 
 /* This function renders out each move that is in Firebase storage */
 function renderMovie(snapshot) {
-
+  console.log(snapshot.val());
   /* Grabs the element from Firebase Storage */
   var element = snapshot.val();
   var cell = document.createElement("div");
@@ -151,7 +135,7 @@ function renderMovie(snapshot) {
   media.setAttribute("class", "mdl-card__media");
   video.setAttribute("controls", "true");
   video.setAttribute("width", "100%");  // should change
-  video.setAttribute("height", "90%");
+  video.setAttribute("height", "70%");
   // console.log("element is: ");
   // console.log(element);
   source.setAttribute('src', element.downloadURL);
@@ -198,6 +182,9 @@ function renderMovie(snapshot) {
 
 /* Renders each snapshot in the storage by calling the renderMovie method for each snapshot that we get */
 function render(snapshot) {
+  // var videoList = document.querySelector(".video-list")
+  // var content = document.querySelector(".page-content");
+  // content.innerHTML= "";
   videoList.innerHTML = "";
   snapshot.forEach(renderMovie);
 }

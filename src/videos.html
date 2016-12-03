@@ -75,15 +75,19 @@ Services Challenge
 					<div class="content-grid mdl-grid">
 
 						<!--This is where the file upload input area is-->
-						<div class="mdl-cell mdl-cell--12-col" >
+						<div class="mdl-cell mdl-cell--12-col">
 							<h2 id="header-div"> Video Feed </h2>
 						</div>
-							
+
 						<div class="mdl-cell mdl-cell--12-col">
 							<div class="file_input_div">
-								<div class="file_input">
+								<div id = "tt1" class="file_input">
 									<label class="image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
 									<i class="material-icons">file_upload</i>
+									<!-- Simple Tooltip -->
+									<div class="mdl-tooltip" data-mdl-for="tt1">
+									Upload
+									</div>
 									<input id="file_input_file" class="none" type="file" onChange = "handleFiles(this.files)"/>
 								</label>
 								</div>
@@ -95,7 +99,7 @@ Services Challenge
 							</div>
 
 						</div <div class="container">
-						
+
 						<div class="mdl-cell mdl-cell--12-col">
 							<ul class="video-list">
 							</ul>
