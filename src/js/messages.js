@@ -84,9 +84,8 @@ function handleFiles(fileList) {
  * This method handles the deleting of a video from the feed
  *  
  **/
-function handleDelete(element) {
-  console.log(element);
-  if (element.createdBy.uid != currentUser.uid) {
+function handleDelete(snapshot) {
+  if (snapshot.val().createdBy.uid != currentUser.uid) {
     alert("You cant change or delete a message that isn't yours");
     return;
   }
@@ -100,6 +99,7 @@ function handleDelete(element) {
   dialog.showModal();
 
   dialog.querySelector('.delete').addEventListener('click', function () {
+    console.log(snapshot.ref);
     snapshot.ref.remove();
     dialog.close();
   });
@@ -195,15 +195,6 @@ function renderMovie(snapshot) {
   feedback.appendChild(like);
   feedback.appendChild(comment);
 
-  // function addingComment(element) {
-  //   // alert("adding comment");
-    
-  //   // refresh the page
-  // }
-
-
-
-
   /* Handles creation of the video element */
   var media = document.createElement("div");
   var source = document.createElement('source');
@@ -249,7 +240,7 @@ function renderMovie(snapshot) {
   button.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised");
   button.innerHTML = "Delete";
   button.addEventListener('click', function(){
-    handleDelete(element);
+    handleDelete(snapshot);
 });
   buttonDiv.appendChild(button);
 
