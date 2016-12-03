@@ -164,6 +164,15 @@ button {
     vertical-align: center;
 }
 
+#main-header {
+    margin: auto;
+    vertical-align: middle;
+}
+
+#videos {
+    margin: auto;
+    vertical-align: middle;
+}
 
 div {
     display: flex;

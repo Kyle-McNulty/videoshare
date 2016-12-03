@@ -79,11 +79,22 @@ function handleFiles(fileList) {
   });
 }
 
+/*
+ * This method handles the deleting of a video from the feed
+ *  
+ **/
+function handleDelete(element) {
+
+
+}
+
+
+
+
 var generalRef = firebase.database().ref("general");
 
 
 /* 
- * 
  * Handles changing text on the material design lite upload selector
  * 
  * Courtesy of Alexander Gaziev from
@@ -160,13 +171,25 @@ function renderMovie(snapshot) {
     author.innerHTML = "Uploaded by " + name.bold();
     author.appendChild(br);
     author.innerHTML += description;
+  author.appendChild(br);
+  authorDiv.appendChild(author);
   
   /* Video Description */
   // var descriptionDiv = document.createElement("div");
   // descriptionDiv.setAttribute("class", "mdl-card__supporting-text");
 
-  authorDiv.appendChild(author);
   // authorDiv.appendChild(description);
+  var buttonDiv = document.createElement("div");
+  var button = document.createElement("button");
+  button.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised");
+  button.innerHTML = "Delete";
+  button.addEventListener('click', function(){
+    handleDelete(element);
+});
+  buttonDiv.appendChild(button);
+
+
+
 
   /* Appends all child elements to the main video cell object */
   titleDiv.appendChild(title);
@@ -174,6 +197,7 @@ function renderMovie(snapshot) {
   cell.appendChild(media);
   cell.appendChild(titleDiv);
   cell.appendChild(authorDiv);
+  cell.appendChild(buttonDiv);
   // cell.appendChild(descriptionDiv);
 
   /* Appends the cell to the entire feed of videos */
