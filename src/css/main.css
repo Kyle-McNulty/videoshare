@@ -105,9 +105,6 @@ button {
     padding-top:12px;;
 }
 
-.mdl-layout__header-row {
-    background-color: teal;
-}
 
 .mdl-layout__content {
     margin:30px;
@@ -205,6 +202,10 @@ div {
 
 #feed-header {
     vertical-align: center;
+}
+
+#feed-page-button {
+    color: black;
 }
 
 
