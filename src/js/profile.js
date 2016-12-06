@@ -21,8 +21,6 @@ document.getElementById("sign-out-button").addEventListener("click", function ()
 });
 
 
-
-
 /* Changes the page to profile page from button input in nav bar */
 document.getElementById("feed-page-button").addEventListener("click", function (){
   console.log("Changing page");
@@ -32,14 +30,16 @@ document.getElementById("feed-page-button").addEventListener("click", function (
 var page = document.getElementById("page-content");
 
 function loadPage(user) {
+    console.log("this is the user");
     console.log(user);
 
     var info = document.createElement("span");
 
     var gravatarPhoto = document.createElement("img");
     gravatarPhoto.classList += " userPhoto";
-    console.log(currentUser.photoURL);
+    // console.log(currentUser.photoURL);
     gravatarPhoto.src = currentUser.photoURL;
+    console.log(gravatarPhoto);
     info.appendChild(gravatarPhoto);
 
     var name = document.createElement("h1");
@@ -150,8 +150,6 @@ function renderMovie(snapshot) {
         buttonDiv.appendChild(button);
 
 
-
-
         /* Appends all child elements to the main video cell object */
         titleDiv.appendChild(title);
         media.appendChild(video);
@@ -201,12 +199,6 @@ function render(snapshot) {
   videoList.innerHTML = "";
   snapshot.forEach(renderMovie);
 }
-
-/* Changes the page to profile page from button input in nav bar */
-document.getElementById("profile-page-button").addEventListener("click", function () {
-  console.log("Changing page");
-  window.location = "../profile.html";
-});
 
 
 

@@ -41,7 +41,7 @@ signUpForm.addEventListener("submit", function(evt) {
                     emailVerified: false,
                     displayName: displayNameInput.value,
                     photoURL: "https://www.gravatar.com/avatar/" + 
-                    md5(emailInput)
+                    md5(emailInput.value)
                 });
             })
             .then(function() {
