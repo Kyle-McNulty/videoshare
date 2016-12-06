@@ -171,9 +171,6 @@ button {
     vertical-align: middle;
 }
 
-div {
-    display: flex;
-}
 
 .material-icons {
   font-family: 'Material Icons';

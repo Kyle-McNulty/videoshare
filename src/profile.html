@@ -63,11 +63,26 @@
 			<!--Main Content for the Page-->
 			<main class="mdl-layout__content">
 				<div id="page-content">
+					<div id="info"></div>
 					<div class="mdl-cell mdl-cell--12-col">
 						<ul class="video-list" id="videos"> </ul>
 					</div>
 				</div>
 			</main>
+			<!--Actual Dialog Box-->
+			<dialog class="mdl-dialog" id="delete-confirmation">
+				<h4 class="mdl-dialog__title">Delete?</h4>
+				<div class="mdl-dialog__content">
+					<p>
+						Are you sure you want to delete this video? You will not be able to reverse this action!
+					</p>
+				</div>
+				<div class="mdl-dialog__actions">
+					<button type="button" class="mdl-button delete" id="delete-it"> <i class="material-icons">delete</i>Delete</button>
+
+					<button type="button" class="mdl-button close" id="keep-it">Cancel</button>
+				</div>
+			</dialog>
 		</body>
 
 </html>

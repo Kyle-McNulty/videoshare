@@ -33,7 +33,7 @@ function loadPage(user) {
     console.log("this is the user");
     console.log(user);
 
-    var info = document.createElement("span");
+    var info = document.getElementById("info");
 
     var gravatarPhoto = document.createElement("img");
     gravatarPhoto.classList += " userPhoto";
@@ -47,7 +47,6 @@ function loadPage(user) {
     name.textContent = user.displayName;
     info.appendChild(name);
 
-    page.append(info);
     currentUser = user;
     //render videos here
     personalRef.limitToLast(20).on("value", render);
