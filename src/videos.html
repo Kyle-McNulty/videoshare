@@ -11,24 +11,27 @@ Services Challenge
 	<!-- Material Design Lite -->
 	<link rel="stylesheet" href="css/main.css">
 	<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css" />
+	<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css" />
 
 	<!-- Material Design icon font -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 	<!-- Header Element -->
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<header class="mdl-layout__header">
-			<div class="mdl-layout__header-row">
-				<!-- Title -->
-				<span class="mdl-layout-title">
-					Xtreme Videos
-				</span>
-				<div class="mdl-layout-spacer"></div>
-				<span class="mdl-layout-title">
+
+	<body>
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+            mdl-layout--fixed-header">
+			<header class="mdl-layout__header">
+				<div class="mdl-layout__header-row">
+					<div class="mdl-layout-spacer"></div>
 					<div class="file_input_div">
-								<div id = "tt1" class="file_input">
-									<label class="image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
+
+						<div id="file_input_text_div" class="mdl-textfield mdl-js-textfield textfield-demo">
+							<input class="file_input_text mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
+							<label class="mdl-textfield__label" for="file_input_text"></label>
+						</div>
+						<div id="tt1" class="file_input">
+							<label class="image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
 									<i class="material-icons">file_upload</i>
 									<!-- Simple Tooltip -->
 									<div class="mdl-tooltip" data-mdl-for="tt1">
@@ -36,67 +39,64 @@ Services Challenge
 									</div>
 									<input id="file_input_file" class="none" type="file" onChange = "handleFiles(this.files)"/>
 								</label>
-								</div>
+						</div>
 
-								<div id="file_input_text_div" class="mdl-textfield mdl-js-textfield textfield-demo">
-									<input class="file_input_text mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
-									<label class="mdl-textfield__label" for="file_input_text"></label>
-								</div>
-				</span>
+					</div>
+			</header>
+			<div class="mdl-layout__drawer">
+				<span class="mdl-layout-title">Xtreme Videos</span>
+				<nav class="mdl-navigation">
+					<a class="mdl-navigation__link" id="feed-page-button" href="videos.html">Video Feed</a>
+					<a class="mdl-navigation__link" id="profile-page-button" href="profile.html">My Profile</a>
+					<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out</button>
+					<!--<a class="mdl-navigation__link" href="">Link</a>-->
+					<!--<a class="mdl-navigation__link" href="">Link</a>-->
+				</nav>
 			</div>
-		</header>
-
-		<!--Hamburger Drawer Menu-->
-		<div class="mdl-layout__drawer">
-			<span class="mdl-layout-title">Main Menu</span>
-			<nav class="mdl-navigation">
-				<button id="feed-page-button" class="mdl-button mdl-js-button"> Video Feed
-				</button>
-				<button id="profile-page-button" class="mdl-button mdl-js-button" onClick="this.changeToProfilePage">My Profile
-				</button>
-			</nav>
-			<span class="mdl-layout-title">User Options</span>
-			<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out</button>
-
-		</div>
-
-		<body>
-
-			<!--Actual Dialog Box-->
-			<dialog class="mdl-dialog" id="delete-confirmation">
-				<h4 class="mdl-dialog__title">Delete?</h4>
-				<div class="mdl-dialog__content">
-					<p>
-						Are you sure you want to delete this video? You will not be able to reverse this action!
-					</p>
-				</div>
-				<div class="mdl-dialog__actions">
-					<button type="button" class="mdl-button delete" id="delete-it"> <i class="material-icons">delete</i>Delete</button>
-
-					<button type="button" class="mdl-button close" id="keep-it">Cancel</button>
-				</div>
-			</dialog>
-
-
-
-
-
-			<!--Main Content for the Page-->
 			<main class="mdl-layout__content">
 				<div class="page-content">
 					<div class="content-grid mdl-grid">
-						<div  class= "mdl-cell mdl-cell--12-col" >
-							<h2 id= "main-header"> Video Feed </h2>
+						<div class="mdl-cell mdl-cell--12-col">
+							<h2 id="main-header"> Video Feed </h2>
 						</div>
 						<div class="mdl-cell mdl-cell--12-col">
 							<ul class="video-list" id="videos"> </ul>
 						</div>
 					</div>
 				</div>
-	</div>
-	</main>
+				</div>
+			</main>
+		</div>
+		<!--Actual Dialog Box-->
+		<dialog class="mdl-dialog" id="delete-confirmation">
+			<h4 class="mdl-dialog__title">Delete?</h4>
+			<div class="mdl-dialog__content">
+				<p>
+					Are you sure you want to delete this video? You will not be able to reverse this action!
+				</p>
+			</div>
+			<div class="mdl-dialog__actions">
+				<button type="button" class="mdl-button delete" id="delete-it"> <i class="material-icons">delete</i>Delete</button>
 
+				<button type="button" class="mdl-button close" id="keep-it">Cancel</button>
+			</div>
+		</dialog>
 	</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<!--Firebase JavaScript library-->
 	<script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>

@@ -26,25 +26,40 @@
 			</div>
 		</header>
 
-		<!--Hamburger Drawer Menu-->
-		<div class="mdl-layout__drawer">
-			<span class="mdl-layout-title">Main Menu</span>
-			<nav class="mdl-navigation">
-				<button id="feed-page-button" class="mdl-button mdl-js-button"> Video Feed
-				</button>
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+            mdl-layout--fixed-header">
+			<header class="mdl-layout__header">
+				<div class="mdl-layout__header-row">
+					<div class="mdl-layout-spacer"></div>
+					<div class="file_input_div">
 
-				<button id="profile-page-button" class="mdl-button mdl-js-button">
-				My Profile
-				</button>
+						<div id="file_input_text_div" class="mdl-textfield mdl-js-textfield textfield-demo">
+							<input class="file_input_text mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
+							<label class="mdl-textfield__label" for="file_input_text"></label>
+						</div>
+						<div id="tt1" class="file_input">
+							<label class="image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
+									<i class="material-icons">file_upload</i>
+									<!-- Simple Tooltip -->
+									<div class="mdl-tooltip" data-mdl-for="tt1">
+									Upload
+									</div>
+									<input id="file_input_file" class="none" type="file" onChange = "handleFiles(this.files)"/>
+								</label>
+						</div>
 
-			</nav>
-			<span class="mdl-layout-title">User Options</span>
-
-			<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out</button>
-		</div>
-
-		<body>
-
+					</div>
+			</header>
+			<div class="mdl-layout__drawer">
+				<span class="mdl-layout-title">Xtreme Videos</span>
+				<nav class="mdl-navigation">
+					<a class="mdl-navigation__link" id="feed-page-button" href="videos.html">Video Feed</a>
+					<a class="mdl-navigation__link" id="profile-page-button" href="profile.html">My Profile</a>
+					<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out</button>
+					<!--<a class="mdl-navigation__link" href="">Link</a>-->
+					<!--<a class="mdl-navigation__link" href="">Link</a>-->
+				</nav>
+			</div>
 			<!--Main Content for the Page-->
 			<main class="mdl-layout__content">
 				<div id="page-content">
