@@ -19,6 +19,17 @@ Services Challenge
 	<!-- Header Element -->
 
 	<body>
+  <!--<video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
+  poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+    <source src="MY_VIDEO.mp4" type='video/mp4'>
+
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a web browser that
+      <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+  </video>-->
+
+
 		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
 			<header class="mdl-layout__header">
@@ -27,7 +38,7 @@ Services Challenge
 					<div class="file_input_div">
 
 						<div id="file_input_text_div" class="mdl-textfield mdl-js-textfield textfield-demo">
-							<input class="file_input_text mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
+							<input class="mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
 							<label class="mdl-textfield__label" for="file_input_text"></label>
 						</div>
 						<div id="tt1" class="file_input">
@@ -40,7 +51,6 @@ Services Challenge
 									<input id="file_input_file" class="none" type="file" onChange = "handleFiles(this.files)"/>
 								</label>
 						</div>
-
 					</div>
 			</header>
 			<div class="mdl-layout__drawer">

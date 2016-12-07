@@ -19,7 +19,6 @@ document.getElementById("sign-out-button").addEventListener("click", function ()
 var storage = firebase.storage();
 
 var personalRef = firebase.database().ref("personal");
-var randomRef = firebase.database().ref("random");
 
 /* Files upload stuff */
 var currentRef = storage.ref();
@@ -28,7 +27,7 @@ var videoList = document.querySelector(".video-list");
 
 function handleFiles(fileList) {
   if (currentUser.emailVerified) {
-    
+
     /* Iterates over the returned FileList object */
     var file = fileList[0];
     var fileName = file.name;
@@ -50,13 +49,24 @@ function handleFiles(fileList) {
           email: currentUser.email, //the user's email address
           emailHashing: currentUser.photoURL, // 
         },
-        comments: []
+        comments: {
+
+        },
+        commentsUser: {
+
+        },
+        Fcount: 0,
+        liked: true,
+        favoriteUser: {
+
+        }
       };
       personalRef.push(info);
     })    // upload the file into storage
   } else {
     alert("You must verify your email before uploading");
   }
+
 
 
   uploadTask.on("state_changed", function (snapshot) {
@@ -155,6 +165,8 @@ function changeState() {
 /* This function renders out each move that is in Firebase storage */
 function renderMovie(snapshot) {
   console.log(snapshot.val());
+  console.log("key here", snapshot.key);
+
   /* Grabs the element from Firebase Storage */
   var element = snapshot.val();
   var cell = document.createElement("div");
@@ -162,7 +174,7 @@ function renderMovie(snapshot) {
 
   // adding favorite and comment input
   var feedback = document.createElement("div");
-  var like = document.createElement("i");
+  var like = document.createElement("div");
   like.innerHTML = "favorite";
   like.setAttribute("class", "material-icons");
   var comment = document.createElement("form");
@@ -172,15 +184,79 @@ function renderMovie(snapshot) {
   var comment_input = document.createElement("input");
 
   /* Adds the user commenting to the array in the object */
-  comment_input.addEventListener("change", function() {
+  comment_input.addEventListener("change", function () {
     var input = comment_input.value;
-    var tempArray = element.comments;
-    tempArray.push(input);
+    var commentRef = snapshot.ref.child("comments");
+    var commentUserRef = snapshot.ref.child("commentsUser");
+    var user = element.createdBy.displayName;
 
-    snapshot.ref.update({
-      comments: tempArray
+    console.log("disaplay name is ", user);
+    commentRef.push({
+      input: input
+    });
+    commentUserRef.push({
+      user: user
     });
   });
+
+  like.addEventListener("click", function () {
+    // console.log("count time is ", time);
+    var favoriteUserRef = snapshot.ref.child("favoriteUser");
+    var countRef = snapshot.ref.child("Fcount");
+    var likedRef = snapshot.ref.child("liked");
+    favoriteUserRef.push({
+      user: element.createdBy.displayName
+    });
+    if (element.liked) {
+      countRef.set(element.Fcount + 1);
+      likedRef.set(!element.liked);
+    } else {
+      countRef.set(element.Fcount - 1);
+      likedRef.set(!element.liked);
+    }
+  });
+
+  var display = document.createElement("div");  // display the like count and all comment
+  var commentsList = document.createElement("div");
+  var favoriteList = document.createElement("div");
+
+    var commentRef = snapshot.ref.child("comments");
+    var commentUserRef = snapshot.ref.child("commentsUser");
+
+    // snapshot.forEach(function(data){
+    //   var eachComment = document.createElement("p");
+    //   Console.log(data);
+    //   eachComment.innerHTML = data + " : " + comments[k];
+    //   commentsList.appendChild(eachComment);
+    // })
+
+
+  var favoriteBy = document.createElement("p");
+  favoriteList.appendChild(favoriteBy);
+  favoriteBy.innerHTML = "Like by " + element.Fcount + " people";
+  // for (var j = 0; j < 3; j++) {
+  //   if (favoriteList[j] != undefined) {
+  //     var eachFavoriteUser = document.createElement("p");
+  //     eachFavoriteUser.innerHTML = favoriteList[j];
+  //     favoriteList.appendChild(eachFavoriteUser);
+  //   }
+  // }
+      console.log(element.commentsUser);
+      console.log(element.comments);
+  
+  for (var k = 0; k < element.comments.length; k++) {
+    if (comments[k] != undefined) {
+
+    }
+  }
+
+
+  display.appendChild(favoriteList);
+  display.appendChild(commentsList);
+
+
+
+
 
   comment_input.setAttribute("class", "mdl-textfield__input");
   comment_input.setAttribute("type", "text");
@@ -201,6 +277,7 @@ function renderMovie(snapshot) {
   var video = document.createElement("video");
   media.setAttribute("class", "mdl-card__media");
   video.setAttribute("controls", "true");
+  video.setAttribute("preload","auto");
   video.setAttribute("width", "100%");  // should change
   video.setAttribute("height", "70%");
   // console.log("element is: ");
@@ -222,14 +299,14 @@ function renderMovie(snapshot) {
   authorDiv.setAttribute("class", "mdl-card__supporting-text");
   var author = document.createElement("p");
   var name = element.createdBy.displayName;
-   var description = "This is a description of the video that can be added in by the user using the metadata property";
-   var br = document.createElement("br");
-    author.innerHTML = "Uploaded by " + name.bold();
-    author.appendChild(br);
-    author.innerHTML += description;
+  var description = "This is a description of the video that can be added in by the user using the metadata property";
+  var br = document.createElement("br");
+  author.innerHTML = "Uploaded by " + name.bold();
+  author.appendChild(br);
+  author.innerHTML += description;
   author.appendChild(br);
   authorDiv.appendChild(author);
-  
+
   /* Video Description */
   // var descriptionDiv = document.createElement("div");
   // descriptionDiv.setAttribute("class", "mdl-card__supporting-text");
@@ -239,9 +316,10 @@ function renderMovie(snapshot) {
   var button = document.createElement("button");
   button.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised");
   button.innerHTML = "Delete";
-  button.addEventListener('click', function(){
+  button.addEventListener('click', function () {
     handleDelete(snapshot);
-});
+    
+  });
   buttonDiv.appendChild(button);
 
 
@@ -254,6 +332,7 @@ function renderMovie(snapshot) {
   cell.appendChild(titleDiv);
   cell.appendChild(authorDiv);
   cell.appendChild(feedback);
+  cell.appendChild(display);
   cell.appendChild(buttonDiv);
   // cell.appendChild(descriptionDiv);
 
@@ -277,3 +356,4 @@ document.getElementById("profile-page-button").addEventListener("click", functio
 });
 
 personalRef.limitToLast(20).on("value", render);
+
