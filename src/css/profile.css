@@ -1,0 +1,21 @@
+
+
+/* profile styling */
+.userName {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.userPhoto {
+    display: inline-block;
+    /*padding-bottom: 30px;*/
+}
+
+#info {
+    padding: 20px 0px 0px 35%;
+    
+}
+
+img {
+    border-radius: 60px;
+}
