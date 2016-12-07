@@ -93,15 +93,20 @@ form > div {
 }
 
 .sign-container {
-    margin-top:15%;
+    margin-top: 10%;
     margin-left: 15%;
 }
 
 #menu-logo {
-    margin-top: 10%;
+    margin-top: 5%;
+    margin-bottom: 5%;
     margin-left: 25%;
     height:70px;
     width:90px;
+}
+
+#signout-button {
+    margin: 5% 0% 0% 15%;
 }
 
 button {

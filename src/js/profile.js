@@ -37,9 +37,7 @@ function loadPage(user) {
 
     var gravatarPhoto = document.createElement("img");
     gravatarPhoto.classList += " userPhoto";
-    // console.log(currentUser.photoURL);
     gravatarPhoto.src = currentUser.photoURL;
-    console.log(gravatarPhoto);
     info.appendChild(gravatarPhoto);
 
     var name = document.createElement("h1");
