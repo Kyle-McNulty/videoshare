@@ -52,16 +52,21 @@
                     <label for="display-name-input"></label>
                     <input id="display-name-input" 
                         type="text"
-                        placeholder="Name">
+                        placeholder="Choose a Display Name">
                 </div>
 
-                <span id="error-message"></span>
-
+                <div class="mdl-textfield mdl-js-textfield">
+                    <textarea class="mdl-textfield__input" type="text" rows= "3" id="bio-input" placeholder="Write a few lines about yourself..." ></textarea>
+                </div>
+               
                 <div>
                     <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
                         Submit
                     </button>
                 </div>
+
+                <span id="error-message"></span>
+
                 
             </form>
 

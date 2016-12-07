@@ -8,14 +8,16 @@
 
 .userPhoto {
     display: inline-block;
-    /*padding-bottom: 30px;*/
+    margin-bottom: 30px;
 }
 
 #info {
-    padding: 20px 0px 0px 35%;
+    padding: 20px 0px 0px 20%;
+    max-width: 1000px;
     
 }
 
 img {
     border-radius: 60px;
+    width: 60px;
 }

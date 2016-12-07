@@ -180,6 +180,7 @@ button {
     vertical-align: center;
 }
 
+
 #main-header {
     margin-left: 20%;
     padding-left: 185px;
@@ -222,6 +223,11 @@ button {
 }
 
 #feed-page-button {
+    color: black;
+}
+
+#bio-input {
+    background-color: white;
     color: black;
 }
 
