@@ -223,9 +223,18 @@ function renderMovie(snapshot) {
   var author = document.createElement("p");
   var name = element.createdBy.displayName;
    var description = "This is a description of the video that can be added in by the user using the metadata property";
+   var date = element.createdOn;
+   console.log(date);
+   date = moment(date).fromNow();
    var br = document.createElement("br");
-    author.innerHTML = "Uploaded by " + name.bold();
+   var avatar = document.createElement("img");
+   avatar.setAttribute("class", "description-avatar");
+   avatar.setAttribute("src", element.createdBy.emailHashing);
+    
+    author.appendChild(avatar);
+    author.innerHTML +=  name.bold() + " uploaded this " + date;
     author.appendChild(br);
+    
     author.innerHTML += description;
   author.appendChild(br);
   authorDiv.appendChild(author);

@@ -159,6 +159,13 @@ button {
     border-radius: 5px;
 }
 
+.description-avatar {
+    margin: 5px;
+    margin-left: 0px;
+    border-radius: 20px;
+    width: 30px;
+}
+
 /* Video Card Container */
 .demo-card-wide.mdl-card {
     margin:20px;
@@ -174,7 +181,8 @@ button {
 }
 
 #main-header {
-    margin-left: 35%;
+    margin-left: 20%;
+    padding-left: 185px;
     vertical-align: middle;
 }
 
