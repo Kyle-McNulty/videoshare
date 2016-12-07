@@ -4,12 +4,18 @@
 var currentUser;
 var authProvider = new firebase.auth.GithubAuthProvider();
 var personalRef = firebase.database().ref("personal");
+var bioRef = firebase.database().ref("bio");
+var bioObject = null;
+// console.log('bio ref:' );
+// console.log(bioRef.get);
+
 var videoList = document.querySelector(".video-list");
 firebase.auth().onAuthStateChanged(function (user) {
     //if there is an authenticated user...
     if (user) {
         currentUser = user;
         loadPage(currentUser);
+        console.log(currentUser);
     } else {
         firebase.auth().signInWithRedirect(authProvider);
         window.location = "index.html";
@@ -21,8 +27,6 @@ document.getElementById("sign-out-button").addEventListener("click", function ()
 });
 
 
-
-
 /* Changes the page to profile page from button input in nav bar */
 document.getElementById("feed-page-button").addEventListener("click", function (){
   console.log("Changing page");
@@ -31,14 +35,14 @@ document.getElementById("feed-page-button").addEventListener("click", function (
 
 var page = document.getElementById("page-content");
 
-function loadPage(user) {
-    console.log(user);
+function findBio(user) {
+}
 
-    var info = document.createElement("span");
+function loadPage(user) {
+    var info = document.getElementById("info");
 
     var gravatarPhoto = document.createElement("img");
     gravatarPhoto.classList += " userPhoto";
-    console.log(currentUser.photoURL);
     gravatarPhoto.src = currentUser.photoURL;
     info.appendChild(gravatarPhoto);
 
@@ -46,8 +50,7 @@ function loadPage(user) {
     name.classList += " userName";
     name.textContent = user.displayName;
     info.appendChild(name);
-
-    page.append(info);
+    bioRef.on("value", renderBio);
     currentUser = user;
     //render videos here
     personalRef.limitToLast(20).on("value", render);
@@ -56,10 +59,8 @@ function loadPage(user) {
 
 /* This function renders out each move that is in Firebase storage */
 function renderMovie(snapshot) {
-    console.log(currentUser);
-    console.log(snapshot);
     if(snapshot.val().createdBy.uid === currentUser.uid) {
-        console.log(snapshot.val());
+        
         /* Grabs the element from Firebase Storage */
         var element = snapshot.val();
         var cell = document.createElement("div");
@@ -108,8 +109,6 @@ function renderMovie(snapshot) {
         video.setAttribute("controls", "true");
         video.setAttribute("width", "100%");  // should change
         video.setAttribute("height", "70%");
-        // console.log("element is: ");
-        // console.log(element);
         source.setAttribute('src', element.downloadURL);
         video.appendChild(source);
 
@@ -122,48 +121,55 @@ function renderMovie(snapshot) {
             .substring(0, element.fileName.length - 4);  // cuts off .mp4
 
 
-        /* Author */
-        var authorDiv = document.createElement("div");
-        authorDiv.setAttribute("class", "mdl-card__supporting-text");
-        var author = document.createElement("p");
-        var name = element.createdBy.displayName;
-        var description = "This is a description of the video that can be added in by the user using the metadata property";
-        var br = document.createElement("br");
-            author.innerHTML = "Uploaded by " + name.bold();
-            author.appendChild(br);
-            author.innerHTML += description;
-        author.appendChild(br);
-        authorDiv.appendChild(author);
-        
-        /* Video Description */
-        // var descriptionDiv = document.createElement("div");
-        // descriptionDiv.setAttribute("class", "mdl-card__supporting-text");
+   /* Author */
+  var authorDiv = document.createElement("div");
+  authorDiv.setAttribute("class", "mdl-card__supporting-text");
+  var author = document.createElement("p");
+  var name = element.createdBy.displayName;
+   var description = "This is a description of the video that can be added in by the user using the metadata property";
+   var date = element.createdOn;
+   console.log(date);
+   date = moment(date).fromNow();
+   var br = document.createElement("br");
+   var avatar = document.createElement("img");
+   avatar.setAttribute("class", "description-avatar");
+   avatar.setAttribute("src", element.createdBy.emailHashing);
+    
+    author.appendChild(avatar);
+    author.innerHTML +=  name.bold() + " uploaded this " + date;
+    author.appendChild(br);
+    
+    author.innerHTML += description;
+  author.appendChild(br);
+  authorDiv.appendChild(author);
+  
+  /* Video Description */
+  // var descriptionDiv = document.createElement("div");
+  // descriptionDiv.setAttribute("class", "mdl-card__supporting-text");
 
-        // authorDiv.appendChild(description);
-        var buttonDiv = document.createElement("div");
-        var button = document.createElement("button");
-        button.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised");
-        button.innerHTML = "Delete";
-        button.addEventListener('click', function(){
-            handleDelete(snapshot);
-        });
-        buttonDiv.appendChild(button);
+  // authorDiv.appendChild(description);
+  var buttonDiv = document.createElement("div");
+  var button = document.createElement("button");
+  button.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised");
+  button.innerHTML = "Delete";
+  button.addEventListener('click', function(){
+    handleDelete(snapshot);
+});
+  buttonDiv.appendChild(button);
 
 
+  /* Appends all child elements to the main video cell object */
+  titleDiv.appendChild(title);
+  media.appendChild(video);
+  cell.appendChild(media);
+  cell.appendChild(titleDiv);
+  cell.appendChild(authorDiv);
+  cell.appendChild(feedback);
+  cell.appendChild(buttonDiv);
+  // cell.appendChild(descriptionDiv);
 
-
-        /* Appends all child elements to the main video cell object */
-        titleDiv.appendChild(title);
-        media.appendChild(video);
-        cell.appendChild(media);
-        cell.appendChild(titleDiv);
-        cell.appendChild(authorDiv);
-        cell.appendChild(feedback);
-        cell.appendChild(buttonDiv);
-        // cell.appendChild(descriptionDiv);
-
-        /* Appends the cell to the entire feed of videos */
-        videoList.appendChild(cell);
+  /* Appends the cell to the entire feed of videos */
+  videoList.appendChild(cell);
     }
 }
 
@@ -183,7 +189,6 @@ function handleDelete(snapshot) {
   dialog.showModal();
 
   dialog.querySelector('.delete').addEventListener('click', function () {
-    console.log(snapshot.ref);
     snapshot.ref.remove();
     dialog.close();
   });
@@ -195,19 +200,29 @@ function handleDelete(snapshot) {
 
 /* Renders each snapshot in the storage by calling the renderMovie method for each snapshot that we get */
 function render(snapshot) {
-  // var videoList = document.querySelector(".video-list")
-  // var content = document.querySelector(".page-content");
-  // content.innerHTML= "";
   videoList.innerHTML = "";
   snapshot.forEach(renderMovie);
 }
 
-/* Changes the page to profile page from button input in nav bar */
-document.getElementById("profile-page-button").addEventListener("click", function () {
-  console.log("Changing page");
-  window.location = "../profile.html";
-});
+/* Renders the bio of the user */
+function renderBio(snapshot) {
+    snapshot.forEach(renderEachBio);
+}
 
+function renderEachBio(snapshot) {
+    if (snapshot.val()) {
+        console.log(snapshot.val());
+        var current = snapshot.val();
+        
+        if (current.email === currentUser.email) {
+            console.log('success');
+            var bio = document.createElement("p");
+            bio.classList += " bio";
+            bio.textContent = current.bio;
+            document.getElementById('info').appendChild(bio);
+        }
+    }
+};
 
 
 

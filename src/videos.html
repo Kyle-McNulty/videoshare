@@ -12,6 +12,7 @@ Services Challenge
 	<link rel="stylesheet" href="css/main.css">
 	<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 	<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css" />
+	<script src="moment.js"></script>
 
 	<!-- Material Design icon font -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -55,10 +56,19 @@ Services Challenge
 			</header>
 			<div class="mdl-layout__drawer">
 				<span class="mdl-layout-title">Xtreme Videos</span>
+				<img id="menu-logo" src="logo.png" alt="SKiing logo">
+				<hr>
+				
+				<span class="mdl-layout-title">Main Menu</span>
 				<nav class="mdl-navigation">
+					
 					<a class="mdl-navigation__link" id="feed-page-button" href="videos.html">Video Feed</a>
 					<a class="mdl-navigation__link" id="profile-page-button" href="profile.html">My Profile</a>
+					<div id="signout-button">
 					<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out</button>
+
+
+					</div>
 					<!--<a class="mdl-navigation__link" href="">Link</a>-->
 					<!--<a class="mdl-navigation__link" href="">Link</a>-->
 				</nav>
@@ -66,10 +76,13 @@ Services Challenge
 			<main class="mdl-layout__content">
 				<div class="page-content">
 					<div class="content-grid mdl-grid">
+						
+						
 						<div class="mdl-cell mdl-cell--12-col">
-							<h2 id="main-header"> Video Feed </h2>
-						</div>
-						<div class="mdl-cell mdl-cell--12-col">
+							<div class="mdl-cell mdl-cell--12-col">
+								<h3 id="main-header"> Latest Uploads: </h2>
+							</div>
+							
 							<ul class="video-list" id="videos"> </ul>
 						</div>
 					</div>

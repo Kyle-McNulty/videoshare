@@ -1,0 +1,23 @@
+
+
+/* profile styling */
+.userName {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.userPhoto {
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+#info {
+    padding: 20px 0px 0px 20%;
+    max-width: 1000px;
+    
+}
+
+img {
+    border-radius: 60px;
+    width: 60px;
+}

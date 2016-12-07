@@ -1,57 +1,52 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="UTF-8">
-        <title>Video Share</title>
-        <link rel="icon" href="img/page-icon.png">
-        
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css" />       
-        <link rel="stylesheet" href="css/main.css">
 
-        <script defer src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-        <script defer src="js/common.js"></script>
-        <script defer src="js/signin.js"></script>      
-    </head>
-    <body class = "indexBody">
-        <div class="container">
-            <div class="page-header">
-                <h1>Sign In</h1>
-            </div>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Video Share</title>
+    <link rel="icon" href="img/page-icon.png">
 
-            <hr>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css" />
+    <link rel="stylesheet" href="css/main.css">
 
+    <script defer src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+    <script defer src="js/common.js"></script>
+    <script defer src="js/signin.js"></script>
+</head>
+
+<body class="indexBody">
+
+        <div class="sign-container">
+            <h1>Sign In</h1>
             <p class="loading hidden">Loading...</p>
 
             <form id="signin-form">
                 <div>
                     <label for="email-input">Email:</label>
-                    <input id="email-input" 
-                        type="email" 
-                        placeholder="your email address"
-                        autofocus>
+                    <input id="email-input" type="email" placeholder="your email address" autofocus>
                 </div>
 
                 <div>
                     <label for="password-input">Password:</label>
-                    <input id="password-input" 
-                        type="password"
-                        placeholder="your password">
+                    <input id="password-input" type="password" placeholder="your password">
                 </div>
 
                 <span id="error-message"></span>
-                
+
                 <div>
-                    <button type="submit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
                         Go
                     </button>
                 </div>
-                
-            </form>
+        
 
-            <p>Don't yet have an account? <a href="signup.html">Sign Up</a></p>
-        </div>
-    </body>
+        </form>
+
+        <p>Don't yet have an account? <a href="signup.html">Sign Up</a></p>
+    </div>
+</body>
+
 </html>

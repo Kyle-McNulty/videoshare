@@ -223,6 +223,7 @@ function renderMovie(snapshot) {
     }
   });
 
+
   var display = document.createElement("div");  // display the like count and all comment
   var commentsList = document.createElement("div");
   var favoriteList = document.createElement("div");
@@ -350,6 +351,7 @@ query.once('value', function(snapshot) {
     var br = document.createElement("br");
     author.innerHTML = "Uploaded by " + name.bold();
     author.appendChild(br);
+    
     author.innerHTML += description;
     author.appendChild(br);
     authorDiv.appendChild(author);

@@ -6,8 +6,8 @@ var passwordInput = document.getElementById("password-input");
 var confirmPasswordInput = document.getElementById("confirm-password-input");
 var displayNameInput = document.getElementById("display-name-input");
 var errorMessage = document.getElementById("error-message");
+var bioInput = document.getElementById("bio-input");
 var loading = document.querySelector(".loading");
-
 
 function checks() {
     var checks = false;
@@ -26,6 +26,7 @@ function checks() {
     return checks;
 }
 
+
 function toggleFeedback() {
     loading.classList.toggle("hidden");
 }
@@ -36,14 +37,21 @@ signUpForm.addEventListener("submit", function(evt) {
         toggleFeedback();
         firebase.auth().createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
             .then(function(user) {
+                var bioRef = firebase.database().ref("bio");
+                var bioObject = {email: emailInput.value,
+                            bio: bioInput.value}
+                bioRef.push(bioObject);
+
                 user.sendEmailVerification();
                 return user.updateProfile({
                     emailVerified: false,
                     displayName: displayNameInput.value,
+                    // bio: "test",
                     photoURL: "https://www.gravatar.com/avatar/" + 
-                    md5(emailInput)
+                    md5(emailInput.value),
                 });
             })
+
             .then(function() {
                 toggleFeedback();
                 window.location = "videos.html";

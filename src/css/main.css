@@ -12,7 +12,6 @@ body, input, button {
 }
 
 input {
-    color: #000;
     width: 95%;
     padding-left:10px;
     padding: 0.5rem;
@@ -31,6 +30,7 @@ h1 {
     color: #FFF;
     background-image: linear-gradient(to bottom, #bbb, #000);
 }
+
 
 .container > p {
     color: #FFF;
@@ -53,7 +53,7 @@ input:focus {
     }
 
     .indexBody {
-        background-image: url(/snow.gif);
+        background-image: url(/candide-background.jpg);
         background-size: cover;
         background-position: center;
     }
@@ -92,6 +92,23 @@ form > div {
     padding: 15px;
 }
 
+.sign-container {
+    margin-top: 10%;
+    margin-left: 15%;
+}
+
+#menu-logo {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 25%;
+    height:70px;
+    width:90px;
+}
+
+#signout-button {
+    margin: 5% 0% 0% 15%;
+}
+
 button {
     padding: 0.5rem;
 }
@@ -110,11 +127,6 @@ button {
     margin:30px;
 }
 
-.mdl-button--raised {
-    color: red;
-    margin:10px;
-    padding:10px;
-}
 
 .new-message-title {
     margin:10px;
@@ -147,6 +159,13 @@ button {
     border-radius: 5px;
 }
 
+.description-avatar {
+    margin: 5px;
+    margin-left: 0px;
+    border-radius: 20px;
+    width: 30px;
+}
+
 /* Video Card Container */
 .demo-card-wide.mdl-card {
     margin:20px;
@@ -161,19 +180,18 @@ button {
     vertical-align: center;
 }
 
+
 #main-header {
-    margin: auto;
+    margin-left: 20%;
+    padding-left: 185px;
     vertical-align: middle;
 }
 
 #videos {
-    margin: auto;
+    margin-left: 20%;
     vertical-align: middle;
 }
 
-div {
-    display: flex;
-}
 
 .material-icons {
   font-family: 'Material Icons';
@@ -208,6 +226,11 @@ div {
     color: black;
 }
 
+#bio-input {
+    background-color: white;
+    color: black;
+}
+
 
 /* Courtesy of Alexander Gaziev */
 
@@ -228,15 +251,4 @@ div {
 
 .none {
   display: none;
-}
-
-
-/* profile styling */
-.userName {
-    display: inline-block;
-    margin-left: 200px;
-}
-
-.userPhoto {
-    display: inline-block;
 }

@@ -7,7 +7,7 @@
         <link rel="icon" href="img/page-icon.png">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">    
+        <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css"/>    
         <link rel="stylesheet" href="css/main.css">
 
         <script defer src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
@@ -16,50 +16,57 @@
         <script defer src="js/signup.js"></script>      
     </head>
     <body class= "indexBody">
-        <div class="container">
+        
+        
+        <!--<div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>-->
+        
+        <div class="sign-container">
             <h1>Sign Up</h1>
-
-            <hr>
-
             <p class="loading hidden">Loading...</p>
 
             <form id="signup-form">
                 <div>
-                    <label for="email-input">Email:</label>
+                    <label for="email-input"></label>
                     <input id="email-input" 
                         type="email" 
-                        placeholder="your email address"
+                        placeholder="Email Address"
                         autofocus>
                 </div>
 
                 <div>
-                    <label for="password-input">Password:</label>
+                    <label for="password-input"></label>
                     <input id="password-input" 
                         type="password"
-                        placeholder="enter your new password">
+                        placeholder="Password">
                 </div>
 
                 <div>
-                    <label for="confirm-password-input">Confirm Password:</label>
+                    <label for="confirm-password-input"></label>
                     <input id="confirm-password-input" 
                         type="password"
-                        placeholder="enter your password again">
+                        placeholder="Confirm Password">
                 </div>
 
                 <div>
-                    <label for="display-name-input">Display Name:</label>
+                    <label for="display-name-input"></label>
                     <input id="display-name-input" 
                         type="text"
-                        placeholder="your display name">
+                        placeholder="Choose a Display Name">
+                </div>
+
+                <div class="mdl-textfield mdl-js-textfield">
+                    <textarea class="mdl-textfield__input" type="text" rows= "3" id="bio-input" placeholder="Write a few lines about yourself..." ></textarea>
+                </div>
+               
+                <div>
+                    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                        Submit
+                    </button>
                 </div>
 
                 <span id="error-message"></span>
 
-                <div>
-                    <button type="submit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                        Go
-                    </button>
-                </div>
                 
             </form>
 
@@ -67,3 +74,4 @@
         </div>
     </body>
 </html>
+
