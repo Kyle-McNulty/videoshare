@@ -92,8 +92,16 @@ form > div {
     padding: 15px;
 }
 
-#signup-container {
+.sign-container {
+    margin-top:15%;
     margin-left: 15%;
+}
+
+#menu-logo {
+    margin-top: 10%;
+    margin-left: 25%;
+    height:70px;
+    width:90px;
 }
 
 button {
@@ -161,12 +169,12 @@ button {
 }
 
 #main-header {
-    margin: auto;
+    margin-left: 35%;
     vertical-align: middle;
 }
 
 #videos {
-    margin: auto;
+    margin-left: 20%;
     vertical-align: middle;
 }
 

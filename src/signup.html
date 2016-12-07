@@ -17,18 +17,22 @@
     </head>
     <body class= "indexBody">
         
-        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-        </div>
-        <div id="signup-container">
+        
+        <!--<div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>-->
+        
+        <div class="sign-container">
             <h1>Sign Up</h1>
-
             <p class="loading hidden">Loading...</p>
 
             <form id="signup-form">
-
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" id="sample3" placeholder="Email Address">
-                 </div>
+                <div>
+                    <label for="email-input"></label>
+                    <input id="email-input" 
+                        type="email" 
+                        placeholder="Email Address"
+                        autofocus>
+                </div>
 
                 <div>
                     <label for="password-input"></label>
@@ -54,7 +58,7 @@
                 <span id="error-message"></span>
 
                 <div>
-                    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised">
+                    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
                         Submit
                     </button>
                 </div>
