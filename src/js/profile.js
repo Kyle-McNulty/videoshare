@@ -64,6 +64,10 @@ function renderMovie(snapshot) {
         like.innerHTML = "favorite";
         like.setAttribute("class", "material-icons");
         like.classList += " heart";
+        var commentSpan = document.createElement("span");
+        var commentPencil = document.createElement("i");
+        commentPencil.classList += " fa fa-pencil";
+        commentPencil.setAttribute("aria-hidden", "true");
         var comment = document.createElement("form");
         comment.setAttribute("action", "#");
         var comment_div = document.createElement("div");
@@ -71,6 +75,7 @@ function renderMovie(snapshot) {
         var comment_input = document.createElement("input");
 
         /* Adds the user commenting to the array in the object */
+        //<i class="fa fa-pencil" aria-hidden="true"></i>
         comment_input.addEventListener("change", function () {
             var input = comment_input.value;
             var commentRef = snapshot.ref.child("comments");
@@ -116,7 +121,9 @@ function renderMovie(snapshot) {
         var comment_label = document.createElement("label");
         comment_label.setAttribute("class", "mdl-textfield__label");
         comment_label.setAttribute("for", "sample1");
-        comment_div.appendChild(comment_input);
+        commentSpan.appendChild(commentPencil);
+        commentSpan.appendChild(comment_input);        
+        comment_div.appendChild(commentSpan);
         comment_div.appendChild(comment_label);
         comment.appendChild(comment_div);
 
