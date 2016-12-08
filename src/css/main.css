@@ -263,6 +263,8 @@ button {
 
 .commentUser {
     font-style: italic;
+    color: #365899;
+    text-transform: uppercase;
 }
 
 .commentSpan {
