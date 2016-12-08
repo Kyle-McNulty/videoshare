@@ -313,7 +313,6 @@ function renderMovie(snapshot) {
   display.classList += " display";
   feedback.classList += " display";
 
-  var test = "test name:";
   var comments = document.createElement("ul");
   if (element.comments) {
     // console.log(element.comments[0]);
@@ -336,7 +335,6 @@ function renderMovie(snapshot) {
       comments.appendChild(commentSpan);
     }
   }
-  console.log(test);
 
 
 
@@ -377,7 +375,7 @@ function renderMovie(snapshot) {
   var description = element.title;
 
   var br = document.createElement("br");
-  author.innerHTML = "Uploaded by " + name.bold() + "  " + moment(element.createdOn).fromNow();
+  // author.innerHTML = "Uploaded by " + name.bold() + "  " + moment(element.createdOn).fromNow();
   var description = "This is a description of the video: " + element.title;
   var date = element.createdOn;
   console.log(date);
