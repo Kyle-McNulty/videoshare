@@ -30,7 +30,7 @@ var personalRef = firebase.database().ref("personal");
 var currentRef = storage.ref();
 var videoList = document.querySelector(".video-list");
 
- var inputCaption;
+var inputCaption;
 
 
 
@@ -48,12 +48,12 @@ function handleFiles(fileList) {
     var storageRef = storage.ref(currentUser.uid + "/" + file.name);
     var uploadTask = storageRef.put(file); // adding to the storage 
 
-      inputCaption = "";
-      var caption = prompt("Enter your input below", "Write a caption..");
+    inputCaption = "";
+    var caption = prompt("Enter your input below", "Write a caption..");
 
-      if (caption != null) {
-        inputCaption = caption;
-      }
+    if (caption != null) {
+      inputCaption = caption;
+    }
 
     uploadTask.then(function () { // adding to the database
       var info = {
@@ -78,7 +78,7 @@ function handleFiles(fileList) {
 
       };
       var item = personalRef.push(info);
-      item.setWithPriority(personalRef, 0 - Date.now())
+      // item.setWithPriority(personalRef, 0 - Date.now())
     })    // upload the file into storage
   } else {
     alert("You must verify your email before uploading");
@@ -172,6 +172,22 @@ function changeState() {
   }
 }
 
+function likeHandler(element, snapshot) {
+  var favoriteUserRef = snapshot.ref.child("favoriteUser");
+  var countRef = snapshot.ref.child("Fcount");
+  var likedRef = snapshot.ref.child("liked");
+  favoriteUserRef.push({
+    user: element.createdBy.displayName
+  });
+  if (element.liked) {
+    countRef.set(element.Fcount + 1);
+    likedRef.set(!element.liked);
+  } else {
+    countRef.set(element.Fcount - 1);
+    likedRef.set(!element.liked);
+  }
+}
+
 /* This function renders out each move that is in Firebase storage */
 function renderMovie(snapshot) {
   console.log(snapshot.val());
@@ -183,11 +199,15 @@ function renderMovie(snapshot) {
   cell.setAttribute("class", "demo-card-wide mdl-card mdl-shadow--2dp video-cell");
 
   // adding favorite and comment input
-  var feedback = document.createElement("span");
+  var feedBackDiv = document.createElement("div");
   var commentSpan = document.createElement("span");
+
+  /* Creating the pencil icon for commenting */
   var commentPencil = document.createElement("i");
   commentPencil.classList += " fa fa-pencil";
   commentPencil.setAttribute("aria-hidden", "true");
+
+
   var likeSpan = document.createElement("span");
   var likeButton = document.createElement("button");
   likeButton.setAttribute("class", "mdl-button mdl-js-button mdl-button--icon")
@@ -198,26 +218,12 @@ function renderMovie(snapshot) {
   likeSpan.appendChild(likeButton);
 
 
-
-  // var dislikeButton = document.createElement("button");
-  // dislikeButton.setAttribute("class","mdl-button mdl-js-button mdl-button--icon")
-  // var dislike = document.createElement("i");
-  // dislike.innerHTML = "favorite";
-  // like.setAttribute("class", "material-icons  mdl-button--colored red");
-  // like.setAttribute("display","none");
-  // likeButton.appendChild(like);
-  // likeSpan.appendChild(likeButton);
-
-
-  var comment = document.createElement("form");
-  comment.setAttribute("action", "#");
-  comment.setAttribute("display", "inline");
-
-
-  var comment = document.createElement("form");
-  comment.setAttribute("action", "#");
+  /* Creates the form for the comment inputs */
+  var commentForm = document.createElement("form");
+  commentForm.setAttribute("action", "#");
   var comment_div = document.createElement("div");
   comment_div.setAttribute("class", "mdl-textfield mdl-js-textfield");
+  // var comment_input_span = document.createElement("span");
   var comment_input = document.createElement("input");
 
   /* Adds the user commenting to the array in the object */
@@ -225,65 +231,24 @@ function renderMovie(snapshot) {
     var input = comment_input.value;
     var commentRef = snapshot.ref.child("comments");
     var user = currentUser.displayName;
-    //console.log(user);
-    //console.log("display name is ", user);
     commentRef.push({
       input: input,
       user: user
     });
   });
 
+  /* Handles click for the like button */
   likeButton.addEventListener("click", function () {
-    // console.log("count time is ", time);
-    var favoriteUserRef = snapshot.ref.child("favoriteUser");
-    var countRef = snapshot.ref.child("Fcount");
-    var likedRef = snapshot.ref.child("liked");
-    favoriteUserRef.push({
-      user: element.createdBy.displayName
-    });
-    if (element.liked) {
-      countRef.set(element.Fcount + 1);
-      likedRef.set(!element.liked);
-    } else {
-      countRef.set(element.Fcount - 1);
-      likedRef.set(!element.liked);
-    }
+    likeHandler(element, snapshot);
   });
-
-
-
-
 
   var display = document.createElement("div");  // display the like count and all comment
   var commentsList = document.createElement("div");
-  var favoriteList = document.createElement("div");
 
   var commentRef = snapshot.ref.child("comments");
-
-  var favoriteBy = document.createElement("p");
-  favoriteList.appendChild(favoriteBy);
-  favoriteBy.innerHTML = "Like by " + element.Fcount + " people";
-
-  // for each child:
-  // var query = firebase.database().ref("comments").orderByKey();
-  // console.log("notice here ", query);
-
-
-  // query.once('value', function (snapshot) {
-  //   snapshot.forEach(function (childSnapshot) {
-  //     var childKey = childSnapshot.key();
-  //     console.log("Key ", key);
-  //     var childData = childSnapshot.val();
-  //     console.log("childData", childData);
-  //     // ...
-  //   });
-  // });
-
-
-  display.appendChild(favoriteList);
   display.appendChild(commentsList);
 
-
+  var comment_input_span = document.createElement("span");
   comment_input.setAttribute("class", "mdl-textfield__input");
   comment_input.setAttribute("type", "text");
   comment_input.setAttribute("id", "sample1");
@@ -291,15 +256,20 @@ function renderMovie(snapshot) {
   comment_label.setAttribute("class", "mdl-textfield__label");
   comment_label.setAttribute("for", "sample1");
   commentSpan.appendChild(commentPencil);
-  commentSpan.appendChild(comment_input);        
+  commentSpan.appendChild(comment_input);
   comment_div.appendChild(commentSpan);
   comment_div.appendChild(comment_label);
-  comment.appendChild(comment_div);
+  comment_input_span.appendChild(comment_div);
 
 
-  feedback.appendChild(likeSpan);
+  var favoriteBy = document.createElement("span");
+  favoriteBy.innerHTML = "" + element.Fcount + " like";
 
-
+  /* Appends the commenting pencil icon onto our comment input span */
+  commentForm.appendChild(favoriteBy);
+  commentForm.appendChild(likeButton);
+  commentForm.appendChild(commentPencil);
+  commentForm.appendChild(comment_input_span);
 
   comment_input.setAttribute("class", "mdl-textfield__input");
   comment_input.setAttribute("type", "text");
@@ -309,21 +279,17 @@ function renderMovie(snapshot) {
   comment_label.setAttribute("for", "sample1");
   comment_div.appendChild(comment_input);
   comment_div.appendChild(comment_label);
-  comment.appendChild(comment_div);
+  commentForm.appendChild(comment_div);
 
 
   display.classList += " display";
-  feedback.classList += " display";
+  feedBackDiv.classList += " display";
 
   var test = "test name:";
   var comments = document.createElement("ul");
   if (element.comments) {
-    // console.log(element.comments[0]);
+
     for (var key in element.comments) {
-      // console.log("user is");
-      // console.log(element.comments[key].user);
-      // console.log(element.comments[key].input);
-      //console.log(element.commentsUser[key].user);
       var commentSpan = document.createElement("span");
       commentSpan.classList += " commentSpan";
       var commentWriting = document.createElement("p");
@@ -341,11 +307,9 @@ function renderMovie(snapshot) {
   console.log(test);
 
 
-
-  feedback.appendChild(likeSpan);
-
-
-  feedback.appendChild(comment);
+  /* Appends the "like" span containing like button onto the feedback div */
+  feedBackDiv.appendChild(likeSpan);
+  feedBackDiv.appendChild(commentForm);
 
   /* Handles creation of the video element */
   var media = document.createElement("div");
@@ -413,7 +377,7 @@ function renderMovie(snapshot) {
   cell.appendChild(media);
   cell.appendChild(titleDiv);
   cell.appendChild(authorDiv);
-  cell.appendChild(feedback);
+  cell.appendChild(feedBackDiv);
   cell.appendChild(display);
   cell.appendChild(comments);
   cell.appendChild(buttonDiv);
@@ -424,9 +388,6 @@ function renderMovie(snapshot) {
 
 /* Renders each snapshot in the storage by calling the renderMovie method for each snapshot that we get */
 function render(snapshot) {
-  // var videoList = document.querySelector(".video-list")
-  // var content = document.querySelector(".page-content");
-  // content.innerHTML= "";
   videoList.innerHTML = "";
   snapshot =
     snapshot.forEach(renderMovie);

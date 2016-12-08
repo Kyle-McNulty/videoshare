@@ -60,9 +60,6 @@ input:focus {
     }
 }
 
-form > div {
-    margin-bottom: 1rem;
-}
 
 .task-list {
     padding-left: 0;
@@ -182,7 +179,6 @@ button {
     vertical-align: center;
     position: center;
 }
-
 
 
 #main-header {
