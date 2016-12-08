@@ -237,7 +237,7 @@ button {
 
 .file_input_div {
   width: 250px;
-  height: 40px;
+  height: 20px;
 }
 
 .file_input {
@@ -272,4 +272,9 @@ button {
 
 .display {
     margin-left: 15px;
+}
+
+.mdl-layout-title {
+    font-family: 'Lobster';
+    font-size: 30px;
 }
