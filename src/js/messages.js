@@ -1,11 +1,15 @@
 
+
+  /*
+Authors: Calvin Korver, Kyle McNulty, Patrick Yi
+This javascript class handles the main index.html file which is the main video feed
+*/
+
 var currentUser;
 var authProvider = new firebase.auth.GithubAuthProvider();
 firebase.auth().onAuthStateChanged(function (user) {
-  //if there is an authenticated user...
   if (user) {
     currentUser = user;
-    // console.log(currentUser.uid);
   } else {
     firebase.auth().signInWithRedirect(authProvider);
     window.location = "index.html";
@@ -17,13 +21,9 @@ document.getElementById("sign-out-button").addEventListener("click", function ()
 });
 
 var storage = firebase.storage();
-
 var personalRef = firebase.database().ref("personal");
-
-var randomRef = firebase.database().ref("random");
 /* Files upload stuff */
 var currentRef = storage.ref();
-
 var videoList = document.querySelector(".video-list");
 
 function handleFiles(fileList) {
@@ -71,8 +71,6 @@ function handleFiles(fileList) {
 
 
   uploadTask.on("state_changed", function (snapshot) {
-    // Observe state change events such as progress, pause, and resume
-    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     console.log('Upload is ' + progress + '% done');
     switch (snapshot.state) {
@@ -87,7 +85,6 @@ function handleFiles(fileList) {
     alert(error);
   }, function () {
     var downloadURL = uploadTask.snapshot.downloadURL;
-    console.log(downloadURL);
   });
 }
 
@@ -110,7 +107,6 @@ function handleDelete(snapshot) {
   dialog.showModal();
 
   dialog.querySelector('.delete').addEventListener('click', function () {
-    console.log(snapshot.ref);
     snapshot.ref.remove();
     dialog.close();
   });
@@ -120,11 +116,7 @@ function handleDelete(snapshot) {
   });
 }
 
-
-
-
 var generalRef = firebase.database().ref("general");
-
 
 /* 
  * Handles changing text on the material design lite upload selector
@@ -166,7 +158,7 @@ function changeState() {
 /* This function renders out each move that is in Firebase storage */
 function renderMovie(snapshot) {
   console.log(snapshot.val());
-  console.log("key here", snapshot.key);
+  //console.log("key here", snapshot.key);
 
   /* Grabs the element from Firebase Storage */
   var element = snapshot.val();
@@ -175,7 +167,7 @@ function renderMovie(snapshot) {
 
   // adding favorite and comment input
   var feedback = document.createElement("div");
-  var likeSpan = document.createElement("span");
+ var likeSpan = document.createElement("span");
 
   var likeButton = document.createElement("button");
   likeButton.setAttribute("class","mdl-button mdl-js-button mdl-button--icon")
@@ -184,6 +176,8 @@ function renderMovie(snapshot) {
   like.setAttribute("class", "material-icons  mdl-button--colored red");
   likeButton.appendChild(like);
   likeSpan.appendChild(likeButton);
+
+
 
   // var dislikeButton = document.createElement("button");
   // dislikeButton.setAttribute("class","mdl-button mdl-js-button mdl-button--icon")
@@ -198,48 +192,41 @@ function renderMovie(snapshot) {
   var comment = document.createElement("form");
   comment.setAttribute("action", "#");
   comment.setAttribute("display","inline");
+
+  var comment = document.createElement("form");
+  comment.setAttribute("action", "#");
   var comment_div = document.createElement("div");
   comment_div.setAttribute("class", "mdl-textfield mdl-js-textfield");
   var comment_input = document.createElement("input");
-
-  // console.log(element.comments);
-  // var ray = element.comments;
-  // ray.push(6);
-  // console.log(ray);
-  //element.update(comments);
-  //element.comments.set(0,"this");
 
   /* Adds the user commenting to the array in the object */
   comment_input.addEventListener("change", function () {
     var input = comment_input.value;
     var commentRef = snapshot.ref.child("comments");
-    var commentUserRef = snapshot.ref.child("commentsUser");
     var user = element.createdBy.displayName;
-    console.log("disaplay name is ", user);
+    console.log("display name is ", user);
     commentRef.push({
-      input: input
-    });
-    commentUserRef.push({
+      input: input,
       user: user
     });
   });
 
-  likeButton.addEventListener("click", function () {
-    // console.log("count time is ", time);
-    var favoriteUserRef = snapshot.ref.child("favoriteUser");
-    var countRef = snapshot.ref.child("Fcount");
-    var likedRef = snapshot.ref.child("liked");
-    favoriteUserRef.push({
-      user: element.createdBy.displayName
-    });
-    if (element.liked) {
-      countRef.set(element.Fcount + 1);
-      likedRef.set(!element.liked);
-    } else {
-      countRef.set(element.Fcount - 1);
-      likedRef.set(!element.liked);
-    }
-  });
+  // likeButton.addEventListener("click", function () {
+  //   // console.log("count time is ", time);
+  //   var favoriteUserRef = snapshot.ref.child("favoriteUser");
+  //   var countRef = snapshot.ref.child("Fcount");
+  //   var likedRef = snapshot.ref.child("liked");
+  //   favoriteUserRef.push({
+  //     user: element.createdBy.displayName
+  //   });
+  //   if (element.liked) {
+  //     countRef.set(element.Fcount + 1);
+  //     likedRef.set(!element.liked);
+  //   } else {
+  //     countRef.set(element.Fcount - 1);
+  //     likedRef.set(!element.liked);
+  //   }
+  // });
 
 
   var display = document.createElement("div");  // display the like count and all comment
@@ -247,180 +234,160 @@ function renderMovie(snapshot) {
   var favoriteList = document.createElement("div");
 
   var commentRef = snapshot.ref.child("comments");
-  var commentUserRef = snapshot.ref.child("commentsUser");
-  console.log("element is");
-  console.log(element);
-  console.log("keys:");
-  //console.log(Object.keys(element.comments));
-  if (element.comments) {
-      // console.log(element.comments[0]);
-      for(var key in element.comments) {
-        console.log(element.comments[key].input);
-      }
-  }
-
-
-  console.log("commentRef", commentRef);
-  // console.log(element.comments);
-
-
-  // snapshot.forEach(function(data){
-  //   var eachComment = document.createElement("p");
-  //   Console.log(data);
-  //   eachComment.innerHTML = data + " : " + comments[k];
-  //   commentsList.appendChild(eachComment);
-  // })
-
 
   var favoriteBy = document.createElement("p");
   favoriteList.appendChild(favoriteBy);
   favoriteBy.innerHTML = "Like by " + element.Fcount + " people";
-  // for (var j = 0; j < 3; j++) {
-  //   if (favoriteList[j] != undefined) {
-  //     var eachFavoriteUser = document.createElement("p");
-  //     eachFavoriteUser.innerHTML = favoriteList[j];
-  //     favoriteList.appendChild(eachFavoriteUser);
-  //   }
-  // }
-
-  // for (var k = 0; k < element.comments.length; k++) {
-  //   if (comments[k] != undefined) {
-
-  //   }
-  // }
 
   // for each child:
   var query = firebase.database().ref("comments").orderByKey();
   console.log("notice here ", query);
 
 
-query.once('value', function(snapshot) {
-  snapshot.forEach(function(childSnapshot) {
-    var childKey = childSnapshot.key();
-    console.log("Key ", key);
-    var childData = childSnapshot.val();
-     console.log("childData", childData);
-    // ...
-  });
-});
-  
-    // query.once("value")
-    //   .then(function (snapshot) {
-    //     snapshot.forEach(function (childSnapshot) {
-    //       // key will be "ada" the first time and "alan" the second time
-    //       var key = childSnapshot.key;
-    //       console.log("Key ", key);
-    //       // childData will be the actual contents of the child
-    //       var childData = childSnapshot.val();
-    //       console.log("childData", childData);
-    //     });
-    //   });
-
-
-    display.appendChild(favoriteList);
-    display.appendChild(commentsList);
-
-
-
-
-
-    comment_input.setAttribute("class", "mdl-textfield__input");
-    comment_input.setAttribute("type", "text");
-    comment_input.setAttribute("id", "sample1");
-    var comment_label = document.createElement("label");
-    comment_label.setAttribute("class", "mdl-textfield__label");
-    comment_label.setAttribute("for", "sample1");
-    comment_div.appendChild(comment_input);
-    comment_div.appendChild(comment_label);
-    comment.appendChild(comment_div);
-
-    feedback.appendChild(likeSpan);
-    feedback.appendChild(comment);
-
-    /* Handles creation of the video element */
-    var media = document.createElement("div");
-    var source = document.createElement('source');
-    var video = document.createElement("video");
-    media.setAttribute("class", "mdl-card__media");
-    video.setAttribute("controls", "true");
-    video.setAttribute("preload", "auto");
-    video.setAttribute("width", "100%");  // should change
-    video.setAttribute("height", "70%");
-    // console.log("element is: ");
-    // console.log(element);
-    source.setAttribute('src', element.downloadURL);
-    video.appendChild(source);
-
-    /* Title of the Video */
-    var titleDiv = document.createElement("div");
-    titleDiv.setAttribute("class", "mdl-card__title");
-    var title = document.createElement("h2");
-    title.setAttribute("class", "mdl-card__title-text");
-    title.innerHTML = element.fileName
-      .substring(0, element.fileName.length - 4);  // cuts off .mp4
-
-
-    /* Author */
-    var authorDiv = document.createElement("div");
-    authorDiv.setAttribute("class", "mdl-card__supporting-text");
-    var author = document.createElement("p");
-    var name = element.createdBy.displayName;
-    var description = "This is a description of the video that can be added in by the user using the metadata property";
-    var br = document.createElement("br");
-    author.innerHTML = "Uploaded by " + name.bold();
-    author.appendChild(br);
-    
-    author.innerHTML += description;
-    author.appendChild(br);
-    authorDiv.appendChild(author);
-
-    /* Video Description */
-    // var descriptionDiv = document.createElement("div");
-    // descriptionDiv.setAttribute("class", "mdl-card__supporting-text");
-
-    // authorDiv.appendChild(description);
-    var buttonDiv = document.createElement("div");
-    var button = document.createElement("button");
-    button.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised");
-    button.innerHTML = "Delete";
-    button.addEventListener('click', function () {
-      handleDelete(snapshot);
-
+  query.once('value', function (snapshot) {
+    snapshot.forEach(function (childSnapshot) {
+      var childKey = childSnapshot.key();
+      console.log("Key ", key);
+      var childData = childSnapshot.val();
+      console.log("childData", childData);
+      // ...
     });
-    buttonDiv.appendChild(button);
+  });
 
 
+  display.appendChild(favoriteList);
+  display.appendChild(commentsList);
 
 
-    /* Appends all child elements to the main video cell object */
-    titleDiv.appendChild(title);
-    media.appendChild(video);
-    cell.appendChild(media);
-    cell.appendChild(titleDiv);
-    cell.appendChild(authorDiv);
-    cell.appendChild(feedback);
-    cell.appendChild(display);
-    cell.appendChild(buttonDiv);
-    // cell.appendChild(descriptionDiv);
+  comment_input.setAttribute("class", "mdl-textfield__input");
+  comment_input.setAttribute("type", "text");
+  comment_input.setAttribute("id", "sample1");
+  var comment_label = document.createElement("label");
+  comment_label.setAttribute("class", "mdl-textfield__label");
+  comment_label.setAttribute("for", "sample1");
+  comment_div.appendChild(comment_input);
+  comment_div.appendChild(comment_label);
+  comment.appendChild(comment_div);
 
-    /* Appends the cell to the entire feed of videos */
-    videoList.appendChild(cell);
+
+  feedback.appendChild(likeSpan);
+
+  display.classList += " display";
+  feedback.classList += " display";
+
+
+  var comments = document.createElement("ul");
+  if (element.comments) {
+    // console.log(element.comments[0]);
+    for (var key in element.comments) {
+      // console.log("user is");
+      // console.log(element.comments[key].user);
+      // console.log(element.comments[key].input);
+      //console.log(element.commentsUser[key].user);
+      var commentSpan = document.createElement("span");
+      commentSpan.classList += " commentSpan";
+      var commentWriting = document.createElement("p");
+      commentWriting.textContent = "-" + element.comments[key].input;
+      var commentUser = document.createElement("p");
+      commentUser.textContent = " \xa0\xa0\xa0 by " + element.comments[key].user;
+      commentUser.classList += " commentUser";
+      
+      commentSpan.appendChild(commentWriting);
+      commentSpan.appendChild(commentUser);
+      comments.appendChild(commentSpan);
+    }
   }
+  
+
+  feedback.appendChild(likeSpan);
+
+  feedback.appendChild(comment);
+
+  /* Handles creation of the video element */
+  var media = document.createElement("div");
+  var source = document.createElement('source');
+  var video = document.createElement("video");
+  media.setAttribute("class", "mdl-card__media");
+  video.setAttribute("controls", "true");
+  video.setAttribute("preload", "auto");
+  video.setAttribute("width", "100%");  // should change
+  video.setAttribute("height", "70%");
+  // console.log("element is: ");
+  // console.log(element);
+  source.setAttribute('src', element.downloadURL);
+  video.appendChild(source);
+
+  /* Title of the Video */
+  var titleDiv = document.createElement("div");
+  titleDiv.setAttribute("class", "mdl-card__title");
+  var title = document.createElement("h2");
+  title.setAttribute("class", "mdl-card__title-text");
+  title.innerHTML = element.fileName
+    .substring(0, element.fileName.length - 4);  // cuts off .mp4
+
+
+  /* Author */
+  var authorDiv = document.createElement("div");
+  authorDiv.setAttribute("class", "mdl-card__supporting-text");
+  var author = document.createElement("p");
+  var name = element.createdBy.displayName;
+  var description = "This is a description of the video that can be added in by the user using the metadata property";
+  var br = document.createElement("br");
+  author.innerHTML = "Uploaded by " + name.bold();
+  author.appendChild(br);
+
+  author.innerHTML += description;
+  author.appendChild(br);
+  authorDiv.appendChild(author);
+
+  /* Video Description */
+  // var descriptionDiv = document.createElement("div");
+  // descriptionDiv.setAttribute("class", "mdl-card__supporting-text");
+
+  // authorDiv.appendChild(description);
+  var buttonDiv = document.createElement("div");
+  var button = document.createElement("button");
+  button.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised");
+  button.innerHTML = "Delete";
+  button.addEventListener('click', function () {
+    handleDelete(snapshot);
+
+  });
+  buttonDiv.appendChild(button);
+
+
+
+
+  /* Appends all child elements to the main video cell object */
+  titleDiv.appendChild(title);
+  media.appendChild(video);
+  cell.appendChild(media);
+  cell.appendChild(titleDiv);
+  cell.appendChild(authorDiv);
+  cell.appendChild(feedback);
+  cell.appendChild(display);
+  cell.appendChild(comments);
+  cell.appendChild(buttonDiv);
+  // cell.appendChild(descriptionDiv);
+
+  /* Appends the cell to the entire feed of videos */
+  videoList.appendChild(cell);
+}
 
 /* Renders each snapshot in the storage by calling the renderMovie method for each snapshot that we get */
 function render(snapshot) {
-      // var videoList = document.querySelector(".video-list")
-      // var content = document.querySelector(".page-content");
-      // content.innerHTML= "";
-      videoList.innerHTML = "";
-      snapshot.forEach(renderMovie);
-    }
+  // var videoList = document.querySelector(".video-list")
+  // var content = document.querySelector(".page-content");
+  // content.innerHTML= "";
+  videoList.innerHTML = "";
+  snapshot.forEach(renderMovie);
+}
 
 /* Changes the page to profile page from button input in nav bar */
 document.getElementById("profile-page-button").addEventListener("click", function () {
-      console.log("Changing page");
-      window.location = "../profile.html";
-    });
+  console.log("Changing page");
+  window.location = "../profile.html";
+});
 
-  personalRef.limitToLast(20).on("value", render);
+personalRef.limitToLast(20).on("value", render);
 
