@@ -30,16 +30,7 @@ var personalRef = firebase.database().ref("personal");
 var currentRef = storage.ref();
 var videoList = document.querySelector(".video-list");
 
-
-var inputCaption;
-function uploadCaption(){
-      inputCaption="";
-      var caption = prompt("Enter your input below", "Write a caption..");
-    
-    if (caption != null) {
-      inputCaption = caption;
-    }
-}
+ var inputCaption;
 
 
 
@@ -56,6 +47,17 @@ function handleFiles(fileList) {
 
     var storageRef = storage.ref(currentUser.uid + "/" + file.name);
     var uploadTask = storageRef.put(file); // adding to the storage 
+
+
+
+
+      inputCaption = "";
+      var caption = prompt("Enter your input below", "Write a caption..");
+
+      if (caption != null) {
+        inputCaption = caption;
+      }
+
     uploadTask.then(function () { // adding to the database
       var info = {
         createdOn: firebase.database.ServerValue.TIMESTAMP,
@@ -70,7 +72,7 @@ function handleFiles(fileList) {
         comments: {
 
         },
-        title:inputCaption,
+        title: inputCaption,
         Fcount: 0,
         liked: true,
         favoriteUser: {
@@ -205,7 +207,7 @@ function renderMovie(snapshot) {
   // like.setAttribute("display","none");
   // likeButton.appendChild(like);
   // likeSpan.appendChild(likeButton);
- 
+
 
   var comment = document.createElement("form");
   comment.setAttribute("action", "#");
@@ -326,9 +328,9 @@ function renderMovie(snapshot) {
 
       commentWriting.textContent = element.comments[key].input;
       var commentUser = document.createElement("p");
-  commentUser.textContent = element.comments[key].user + ":\xa0 ";
+      commentUser.textContent = element.comments[key].user + ":\xa0 ";
       commentUser.classList += " commentUser";
-      
+
       commentSpan.appendChild(commentUser);
       commentSpan.appendChild(commentWriting);
       comments.appendChild(commentSpan);
@@ -373,9 +375,9 @@ function renderMovie(snapshot) {
 
   // var description = "This is a description of the video that can be added in by the user using the metadata property";
   var description = element.title;
-  
+
   var br = document.createElement("br");
-  author.innerHTML = "Uploaded by " + name.bold() + "  " + moment(element.createdOn).fromNow() ;
+  author.innerHTML = "Uploaded by " + name.bold() + "  " + moment(element.createdOn).fromNow();
   var description = "This is a description of the video:" + inputCaption;
   var date = element.createdOn;
   console.log(date);
@@ -414,7 +416,7 @@ function renderMovie(snapshot) {
   cell.appendChild(display);
   cell.appendChild(comments);
   cell.appendChild(buttonDiv);
-  
+
   /* Appends the cell to the entire feed of videos */
   videoList.appendChild(cell);
 }
@@ -425,8 +427,8 @@ function render(snapshot) {
   // var content = document.querySelector(".page-content");
   // content.innerHTML= "";
   videoList.innerHTML = "";
-  snapshot = 
-  snapshot.forEach(renderMovie);
+  snapshot =
+    snapshot.forEach(renderMovie);
 }
 
 /* Changes the page to profile page from button input in nav bar */
