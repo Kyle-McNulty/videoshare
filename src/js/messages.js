@@ -331,8 +331,6 @@ function renderMovie(snapshot) {
   buttonDiv.appendChild(button);
 
 
-
-
   /* Appends all child elements to the main video cell object */
   titleDiv.appendChild(title);
   media.appendChild(video);

@@ -168,8 +168,9 @@ button {
 
 /* Video Card Container */
 .demo-card-wide.mdl-card {
-    margin:20px;
-    width: 512px;
+    margin: 20px;
+    width: 100%;
+    max-width: 1000px;
 }
 
 .mdl-card__media {
@@ -178,18 +179,19 @@ button {
 
 .video-cell {
     vertical-align: center;
+    position: center;
 }
+
 
 
 #main-header {
     margin-left: 20%;
-    padding-left: 185px;
+    padding-left: 100px;
     vertical-align: middle;
     /*font-family: 'Consolas';*/
 }
 
 #videos {
-    margin-left: 20%;
     vertical-align: middle;
 }
 
