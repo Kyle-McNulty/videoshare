@@ -48,9 +48,6 @@ function handleFiles(fileList) {
     var storageRef = storage.ref(currentUser.uid + "/" + file.name);
     var uploadTask = storageRef.put(file); // adding to the storage 
 
-
-
-
       inputCaption = "";
       var caption = prompt("Enter your input below", "Write a caption..");
 
@@ -187,7 +184,10 @@ function renderMovie(snapshot) {
 
   // adding favorite and comment input
   var feedback = document.createElement("span");
-
+  var commentSpan = document.createElement("span");
+  var commentPencil = document.createElement("i");
+  commentPencil.classList += " fa fa-pencil";
+  commentPencil.setAttribute("aria-hidden", "true");
   var likeSpan = document.createElement("span");
   var likeButton = document.createElement("button");
   likeButton.setAttribute("class", "mdl-button mdl-js-button mdl-button--icon")
@@ -226,7 +226,7 @@ function renderMovie(snapshot) {
     var commentRef = snapshot.ref.child("comments");
     var user = currentUser.displayName;
     //console.log(user);
-    console.log("display name is ", user);
+    //console.log("display name is ", user);
     commentRef.push({
       input: input,
       user: user
@@ -290,7 +290,9 @@ function renderMovie(snapshot) {
   var comment_label = document.createElement("label");
   comment_label.setAttribute("class", "mdl-textfield__label");
   comment_label.setAttribute("for", "sample1");
-  comment_div.appendChild(comment_input);
+  commentSpan.appendChild(commentPencil);
+  commentSpan.appendChild(comment_input);        
+  comment_div.appendChild(commentSpan);
   comment_div.appendChild(comment_label);
   comment.appendChild(comment_div);
 
@@ -364,7 +366,7 @@ function renderMovie(snapshot) {
   titleDiv.setAttribute("class", "mdl-card__title");
   var title = document.createElement("h2");
   title.setAttribute("class", "mdl-card__title-text");
-  title.innerHTML = "File Name: " + element.fileName
+  title.innerHTML = element.fileName
     .substring(0, element.fileName.length - 4);  // cuts off .mp4
 
   /* Author */
@@ -377,7 +379,6 @@ function renderMovie(snapshot) {
   var description = element.title;
 
   var br = document.createElement("br");
-  author.innerHTML = "Uploaded by " + name.bold() + "  " + moment(element.createdOn).fromNow();
   var description = "This is a description of the video: " + element.title;
   var date = element.createdOn;
   console.log(date);

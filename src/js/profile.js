@@ -182,7 +182,7 @@ function renderMovie(snapshot) {
         authorDiv.setAttribute("class", "mdl-card__supporting-text");
         var author = document.createElement("p");
         var name = element.createdBy.displayName;
-        var description = "This is a description of the video that can be added in by the user using the metadata property";
+        var description = "This is a description of the video: " + element.title;
         var date = element.createdOn;
         console.log(date);
         date = moment(date).fromNow();
