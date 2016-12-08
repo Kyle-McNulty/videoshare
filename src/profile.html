@@ -27,6 +27,7 @@
 			</div>
 		</header>
 
+		<!--This is the main header of the page-->
 		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
 			<header class="mdl-layout__header">
@@ -41,35 +42,37 @@
 						<div id="tt1" class="file_input">
 							<label class="image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
 									<i class="material-icons">file_upload</i>
+									
 									<!-- Simple Tooltip -->
 									<div class="mdl-tooltip" data-mdl-for="tt1">
 									Upload
 									</div>
+
 									<input id="file_input_file" class="none" type="file" onChange = "handleFiles(this.files)"/>
-								</label>
+							</label>
 						</div>
 
 					</div>
 			</header>
-						<div class="mdl-layout__drawer">
+			
+			<!--This is the sidebar of the page-->
+			<div class="mdl-layout__drawer">
 				<span class="mdl-layout-title">Xtreme Videos</span>
 				<img id="menu-logo" src="logo.png" alt="SKiing logo">
 				<hr>
-				
+
 				<span class="mdl-layout-title">Main Menu</span>
 				<nav class="mdl-navigation">
-					
+
 					<a class="mdl-navigation__link" id="feed-page-button" href="videos.html">Video Feed</a>
 					<a class="mdl-navigation__link" id="profile-page-button" href="profile.html">My Profile</a>
 					<div id="signout-button">
-					<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out</button>
-
-
+						<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out
+						</button>
 					</div>
-					<!--<a class="mdl-navigation__link" href="">Link</a>-->
-					<!--<a class="mdl-navigation__link" href="">Link</a>-->
 				</nav>
 			</div>
+			
 			<!--Main Content for the Page-->
 			<main class="mdl-layout__content">
 				<div id="page-content">
@@ -80,7 +83,8 @@
 					</div>
 				</div>
 			</main>
-			<!--Actual Dialog Box-->
+			
+			<!--Dialog Box-->
 			<dialog class="mdl-dialog" id="delete-confirmation">
 				<h4 class="mdl-dialog__title">Delete?</h4>
 				<div class="mdl-dialog__content">
@@ -89,13 +93,13 @@
 					</p>
 				</div>
 				<div class="mdl-dialog__actions">
-					<button type="button" class="mdl-button delete" id="delete-it"> <i class="material-icons">delete</i>Delete</button>
-
-					<button type="button" class="mdl-button close" id="keep-it">Cancel</button>
+					<button type="button" class="mdl-button delete" id="delete-it"> <i class="material-icons">delete</i>Delete
+					</button>
+					<button type="button" class="mdl-button close" id="keep-it">Cancel
+					</button>
 				</div>
 			</dialog>
-		</body>
-
+	</body>
 </html>
 
 
