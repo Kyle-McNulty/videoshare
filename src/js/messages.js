@@ -78,7 +78,8 @@ function handleFiles(fileList) {
         },
 
       };
-      personalRef.push(info);
+      var item = personalRef.push(info);
+      item.setWithPriority(personalRef, 0 - Date.now())
     })    // upload the file into storage
   } else {
     alert("You must verify your email before uploading");
@@ -421,6 +422,7 @@ function render(snapshot) {
   // var content = document.querySelector(".page-content");
   // content.innerHTML= "";
   videoList.innerHTML = "";
+  snapshot = 
   snapshot.forEach(renderMovie);
 }
 
@@ -430,5 +432,5 @@ document.getElementById("profile-page-button").addEventListener("click", functio
   window.location = "../profile.html";
 });
 
-personalRef.limitToLast(20).on("value", render);
+personalRef.startAt().limitToLast(20).on("value", render);
 
