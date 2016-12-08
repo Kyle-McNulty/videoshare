@@ -257,6 +257,13 @@ button {
   display: none;
 }
 
+
+
+.red { 
+    color:#FF5252;
+
+    }
+
 .commentUser {
     font-style: italic;
     color: #365899;
@@ -277,7 +284,15 @@ button {
     margin-left: 15px;
 }
 
+<<<<<<< HEAD
+.commentUser{
+    color:#365899;
+}
+
+
+=======
 .mdl-layout-title {
     font-family: 'Lobster';
     font-size: 30px;
 }
+>>>>>>> 7f28e95d62cf87c35fedda792e11d433ca6745ba

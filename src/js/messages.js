@@ -3,6 +3,12 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 This javascript class handles the main index.html file which is the main video feed
 */
 
+
+/*
+Authors: Calvin Korver, Kyle McNulty, Patrick Yi
+This javascript class handles the main index.html file which is the main video feed
+*/
+
 var currentUser;
 var authProvider = new firebase.auth.GithubAuthProvider();
 firebase.auth().onAuthStateChanged(function (user) {
@@ -23,6 +29,19 @@ var personalRef = firebase.database().ref("personal");
 /* Files upload stuff */
 var currentRef = storage.ref();
 var videoList = document.querySelector(".video-list");
+
+
+var inputCaption;
+function uploadCaption(){
+      inputCaption="";
+      var caption = prompt("Enter your input below", "Write a caption..");
+    
+    if (caption != null) {
+      inputCaption = caption;
+    }
+}
+
+
 
 function handleFiles(fileList) {
   if (currentUser.emailVerified) {
@@ -51,16 +70,16 @@ function handleFiles(fileList) {
         comments: {
 
         },
-        commentsUser: {
-
-        },
+        title:inputCaption,
         Fcount: 0,
         liked: true,
         favoriteUser: {
 
-        }
+        },
+
       };
-      personalRef.push(info);
+      var item = personalRef.push(info);
+      item.setWithPriority(personalRef, 0 - Date.now())
     })    // upload the file into storage
   } else {
     alert("You must verify your email before uploading");
@@ -103,9 +122,10 @@ function handleDelete(snapshot) {
   }
 
   dialog.showModal();
-
+  var itemRef = currentRef.child(currentUser.uid + "/" + snapshot.val().fileName)
   dialog.querySelector('.delete').addEventListener('click', function () {
     snapshot.ref.remove();
+    itemRef.delete();
     dialog.close();
   });
 
@@ -164,11 +184,34 @@ function renderMovie(snapshot) {
   cell.setAttribute("class", "demo-card-wide mdl-card mdl-shadow--2dp video-cell");
 
   // adding favorite and comment input
-  var feedback = document.createElement("div");
+  var feedback = document.createElement("span");
+
+  var likeSpan = document.createElement("span");
+  var likeButton = document.createElement("button");
+  likeButton.setAttribute("class", "mdl-button mdl-js-button mdl-button--icon")
   var like = document.createElement("i");
-  like.innerHTML = "favorite";
-  like.setAttribute("class", "material-icons");
-  like.classList += " heart";
+  like.innerHTML = "favorite border";
+  like.setAttribute("class", "material-icons  mdl-button--colored red");
+  likeButton.appendChild(like);
+  likeSpan.appendChild(likeButton);
+
+
+
+  // var dislikeButton = document.createElement("button");
+  // dislikeButton.setAttribute("class","mdl-button mdl-js-button mdl-button--icon")
+  // var dislike = document.createElement("i");
+  // dislike.innerHTML = "favorite";
+  // like.setAttribute("class", "material-icons  mdl-button--colored red");
+  // like.setAttribute("display","none");
+  // likeButton.appendChild(like);
+  // likeSpan.appendChild(likeButton);
+ 
+
+  var comment = document.createElement("form");
+  comment.setAttribute("action", "#");
+  comment.setAttribute("display", "inline");
+
+
   var comment = document.createElement("form");
   comment.setAttribute("action", "#");
   var comment_div = document.createElement("div");
@@ -188,7 +231,7 @@ function renderMovie(snapshot) {
     });
   });
 
-  like.addEventListener("click", function () {
+  likeButton.addEventListener("click", function () {
     // console.log("count time is ", time);
     var favoriteUserRef = snapshot.ref.child("favoriteUser");
     var countRef = snapshot.ref.child("Fcount");
@@ -206,6 +249,9 @@ function renderMovie(snapshot) {
   });
 
 
+
+
+
   var display = document.createElement("div");  // display the like count and all comment
   var commentsList = document.createElement("div");
   var favoriteList = document.createElement("div");
@@ -217,19 +263,19 @@ function renderMovie(snapshot) {
   favoriteBy.innerHTML = "Like by " + element.Fcount + " people";
 
   // for each child:
-  var query = firebase.database().ref("comments").orderByKey();
-  console.log("notice here ", query);
+  // var query = firebase.database().ref("comments").orderByKey();
+  // console.log("notice here ", query);
 
 
-  query.once('value', function (snapshot) {
-    snapshot.forEach(function (childSnapshot) {
-      var childKey = childSnapshot.key();
-      console.log("Key ", key);
-      var childData = childSnapshot.val();
-      console.log("childData", childData);
-      // ...
-    });
-  });
+  // query.once('value', function (snapshot) {
+  //   snapshot.forEach(function (childSnapshot) {
+  //     var childKey = childSnapshot.key();
+  //     console.log("Key ", key);
+  //     var childData = childSnapshot.val();
+  //     console.log("childData", childData);
+  //     // ...
+  //   });
+  // });
 
 
   display.appendChild(favoriteList);
@@ -246,10 +292,26 @@ function renderMovie(snapshot) {
   comment_div.appendChild(comment_label);
   comment.appendChild(comment_div);
 
+
+  feedback.appendChild(likeSpan);
+
+
+
+  comment_input.setAttribute("class", "mdl-textfield__input");
+  comment_input.setAttribute("type", "text");
+  comment_input.setAttribute("id", "sample1");
+  var comment_label = document.createElement("label");
+  comment_label.setAttribute("class", "mdl-textfield__label");
+  comment_label.setAttribute("for", "sample1");
+  comment_div.appendChild(comment_input);
+  comment_div.appendChild(comment_label);
+  comment.appendChild(comment_div);
+
+
   display.classList += " display";
   feedback.classList += " display";
 
-
+  var test = "test name:";
   var comments = document.createElement("ul");
   if (element.comments) {
     // console.log(element.comments[0]);
@@ -261,6 +323,7 @@ function renderMovie(snapshot) {
       var commentSpan = document.createElement("span");
       commentSpan.classList += " commentSpan";
       var commentWriting = document.createElement("p");
+
       commentWriting.textContent = element.comments[key].input;
       var commentUser = document.createElement("p");
   commentUser.textContent = element.comments[key].user + ":\xa0 ";
@@ -271,9 +334,13 @@ function renderMovie(snapshot) {
       comments.appendChild(commentSpan);
     }
   }
-  
+  console.log(test);
 
-  feedback.appendChild(like);
+
+
+  feedback.appendChild(likeSpan);
+
+
   feedback.appendChild(comment);
 
   /* Handles creation of the video element */
@@ -295,7 +362,7 @@ function renderMovie(snapshot) {
   titleDiv.setAttribute("class", "mdl-card__title");
   var title = document.createElement("h2");
   title.setAttribute("class", "mdl-card__title-text");
-  title.innerHTML = element.fileName
+  title.innerHTML = "File Name: " + element.fileName
     .substring(0, element.fileName.length - 4);  // cuts off .mp4
 
   /* Author */
@@ -303,7 +370,13 @@ function renderMovie(snapshot) {
   authorDiv.setAttribute("class", "mdl-card__supporting-text");
   var author = document.createElement("p");
   var name = element.createdBy.displayName;
-  var description = "This is a description of the video that can be added in by the user using the metadata property";
+
+  // var description = "This is a description of the video that can be added in by the user using the metadata property";
+  var description = element.title;
+  
+  var br = document.createElement("br");
+  author.innerHTML = "Uploaded by " + name.bold() + "  " + moment(element.createdOn).fromNow() ;
+  var description = "This is a description of the video:" + inputCaption;
   var date = element.createdOn;
   console.log(date);
   date = moment(date).fromNow();
@@ -352,6 +425,7 @@ function render(snapshot) {
   // var content = document.querySelector(".page-content");
   // content.innerHTML= "";
   videoList.innerHTML = "";
+  snapshot = 
   snapshot.forEach(renderMovie);
 }
 
@@ -361,5 +435,5 @@ document.getElementById("profile-page-button").addEventListener("click", functio
   window.location = "../profile.html";
 });
 
-personalRef.limitToLast(20).on("value", render);
+personalRef.startAt().limitToLast(20).on("value", render);
 
