@@ -156,7 +156,7 @@ function changeState() {
 /* This function renders out each move that is in Firebase storage */
 function renderMovie(snapshot) {
   console.log(snapshot.val());
-  console.log("key here", snapshot.key);
+  //console.log("key here", snapshot.key);
 
   /* Grabs the element from Firebase Storage */
   var element = snapshot.val();
@@ -168,6 +168,7 @@ function renderMovie(snapshot) {
   var like = document.createElement("i");
   like.innerHTML = "favorite";
   like.setAttribute("class", "material-icons");
+  like.classList += " heart";
   var comment = document.createElement("form");
   comment.setAttribute("action", "#");
   var comment_div = document.createElement("div");
@@ -178,13 +179,10 @@ function renderMovie(snapshot) {
   comment_input.addEventListener("change", function () {
     var input = comment_input.value;
     var commentRef = snapshot.ref.child("comments");
-    var commentUserRef = snapshot.ref.child("commentsUser");
     var user = element.createdBy.displayName;
-    console.log("disaplay name is ", user);
+    console.log("display name is ", user);
     commentRef.push({
-      input: input
-    });
-    commentUserRef.push({
+      input: input,
       user: user
     });
   });
@@ -212,47 +210,10 @@ function renderMovie(snapshot) {
   var favoriteList = document.createElement("div");
 
   var commentRef = snapshot.ref.child("comments");
-  var commentUserRef = snapshot.ref.child("commentsUser");
-  console.log("element is");
-  console.log(element);
-  console.log("keys:");
-  //console.log(Object.keys(element.comments));
-  if (element.comments) {
-    // console.log(element.comments[0]);
-    for (var key in element.comments) {
-      console.log(element.comments[key].input);
-    }
-  }
-
-
-  console.log("commentRef", commentRef);
-  // console.log(element.comments);
-
-
-  // snapshot.forEach(function(data){
-  //   var eachComment = document.createElement("p");
-  //   Console.log(data);
-  //   eachComment.innerHTML = data + " : " + comments[k];
-  //   commentsList.appendChild(eachComment);
-  // })
-
 
   var favoriteBy = document.createElement("p");
   favoriteList.appendChild(favoriteBy);
   favoriteBy.innerHTML = "Like by " + element.Fcount + " people";
-  // for (var j = 0; j < 3; j++) {
-  //   if (favoriteList[j] != undefined) {
-  //     var eachFavoriteUser = document.createElement("p");
-  //     eachFavoriteUser.innerHTML = favoriteList[j];
-  //     favoriteList.appendChild(eachFavoriteUser);
-  //   }
-  // }
-
-  // for (var k = 0; k < element.comments.length; k++) {
-  //   if (comments[k] != undefined) {
-
-  //   }
-  // }
 
   // for each child:
   var query = firebase.database().ref("comments").orderByKey();
@@ -269,24 +230,9 @@ function renderMovie(snapshot) {
     });
   });
 
-  // query.once("value")
-  //   .then(function (snapshot) {
-  //     snapshot.forEach(function (childSnapshot) {
-  //       // key will be "ada" the first time and "alan" the second time
-  //       var key = childSnapshot.key;
-  //       console.log("Key ", key);
-  //       // childData will be the actual contents of the child
-  //       var childData = childSnapshot.val();
-  //       console.log("childData", childData);
-  //     });
-  //   });
-
 
   display.appendChild(favoriteList);
   display.appendChild(commentsList);
-
-
-
 
 
   comment_input.setAttribute("class", "mdl-textfield__input");
@@ -298,6 +244,33 @@ function renderMovie(snapshot) {
   comment_div.appendChild(comment_input);
   comment_div.appendChild(comment_label);
   comment.appendChild(comment_div);
+
+  display.classList += " display";
+  feedback.classList += " display";
+
+
+  var comments = document.createElement("ul");
+  if (element.comments) {
+    // console.log(element.comments[0]);
+    for (var key in element.comments) {
+      // console.log("user is");
+      // console.log(element.comments[key].user);
+      // console.log(element.comments[key].input);
+      //console.log(element.commentsUser[key].user);
+      var commentSpan = document.createElement("span");
+      commentSpan.classList += " commentSpan";
+      var commentWriting = document.createElement("p");
+      commentWriting.textContent = "-" + element.comments[key].input;
+      var commentUser = document.createElement("p");
+      commentUser.textContent = " \xa0\xa0\xa0by " + element.comments[key].user;
+      commentUser.classList += " commentUser";
+      
+      commentSpan.appendChild(commentWriting);
+      commentSpan.appendChild(commentUser);
+      comments.appendChild(commentSpan);
+    }
+  }
+  
 
   feedback.appendChild(like);
   feedback.appendChild(comment);
@@ -365,6 +338,7 @@ function renderMovie(snapshot) {
   cell.appendChild(authorDiv);
   cell.appendChild(feedback);
   cell.appendChild(display);
+  cell.appendChild(comments);
   cell.appendChild(buttonDiv);
   // cell.appendChild(descriptionDiv);
 

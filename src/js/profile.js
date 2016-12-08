@@ -63,6 +63,7 @@ function renderMovie(snapshot) {
         var like = document.createElement("i");
         like.innerHTML = "favorite";
         like.setAttribute("class", "material-icons");
+        like.classList += " heart";
         var comment = document.createElement("form");
         comment.setAttribute("action", "#");
         var comment_div = document.createElement("div");
@@ -80,6 +81,34 @@ function renderMovie(snapshot) {
             });
         });
 
+        like.addEventListener("click", function () {
+    // console.log("count time is ", time);
+            var favoriteUserRef = snapshot.ref.child("favoriteUser");
+            var countRef = snapshot.ref.child("Fcount");
+            var likedRef = snapshot.ref.child("liked");
+            favoriteUserRef.push({
+            user: element.createdBy.displayName
+            });
+            if (element.liked) {
+            countRef.set(element.Fcount + 1);
+            likedRef.set(!element.liked);
+            } else {
+            countRef.set(element.Fcount - 1);
+            likedRef.set(!element.liked);
+            }
+        });
+
+
+        var display = document.createElement("div");  // display the like count and all comment
+        var commentsList = document.createElement("div");
+        var favoriteList = document.createElement("div");
+
+        var commentRef = snapshot.ref.child("comments");
+
+        var favoriteBy = document.createElement("p");
+        favoriteList.appendChild(favoriteBy);
+        favoriteBy.innerHTML = "Like by " + element.Fcount + " people";
+
         comment_input.setAttribute("class", "mdl-textfield__input");
         comment_input.setAttribute("type", "text");
         comment_input.setAttribute("id", "sample1");
@@ -90,8 +119,35 @@ function renderMovie(snapshot) {
         comment_div.appendChild(comment_label);
         comment.appendChild(comment_div);
 
+        display.appendChild(favoriteList);
+        display.classList += " display";
+        feedback.classList += " display";
         feedback.appendChild(like);
         feedback.appendChild(comment);
+
+        // Renders the comments to the screen
+        var comments = document.createElement("ul");
+        if (element.comments) {
+            console.log(element);
+            // console.log(element.comments[0]);
+            for (var key in element.comments) {
+            // console.log("user is");
+            // console.log(element.comments[key].user);
+            // console.log(element.comments[key].input);
+            //console.log(element.commentsUser[key].user);
+            var commentSpan = document.createElement("span");
+            commentSpan.classList += " commentSpan";
+            var commentWriting = document.createElement("p");
+            commentWriting.textContent = "-" + element.comments[key].input;
+            var commentUser = document.createElement("p");
+            commentUser.textContent = " \xa0\xa0\xa0by " + element.comments[key].user;
+            commentUser.classList += " commentUser";
+            
+            commentSpan.appendChild(commentWriting);
+            commentSpan.appendChild(commentUser);
+            comments.appendChild(commentSpan);
+            }
+        }
 
         /* Handles creation of the video element */
         var media = document.createElement("div");
@@ -152,6 +208,8 @@ function renderMovie(snapshot) {
         cell.appendChild(titleDiv);
         cell.appendChild(authorDiv);
         cell.appendChild(feedback);
+        cell.appendChild(display);
+        cell.appendChild(comments);
         cell.appendChild(buttonDiv);
 
         /* Appends the cell to the entire feed of videos */

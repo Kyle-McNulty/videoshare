@@ -169,7 +169,7 @@ button {
 /* Video Card Container */
 .demo-card-wide.mdl-card {
     margin:20px;
-  width: 512px;
+    width: 512px;
 }
 
 .mdl-card__media {
@@ -185,6 +185,7 @@ button {
     margin-left: 20%;
     padding-left: 185px;
     vertical-align: middle;
+    font-family: 'Consolas';
 }
 
 #videos {
@@ -251,4 +252,22 @@ button {
 
 .none {
   display: none;
+}
+
+.commentUser {
+    font-style: italic;
+}
+
+.commentSpan {
+    display: flex;
+}
+
+.heart {
+    color: red;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.display {
+    margin-left: 15px;
 }
