@@ -378,7 +378,7 @@ function renderMovie(snapshot) {
 
   var br = document.createElement("br");
   author.innerHTML = "Uploaded by " + name.bold() + "  " + moment(element.createdOn).fromNow();
-  var description = "This is a description of the video:" + inputCaption;
+  var description = "This is a description of the video: " + element.title;
   var date = element.createdOn;
   console.log(date);
   date = moment(date).fromNow();
