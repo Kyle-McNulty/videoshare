@@ -4,7 +4,7 @@
 .userName {
     display: inline-block;
     margin-left: 20px;
-    font-family: 'Consolas';
+    /*font-family: 'Consolas';*/
 }
 
 .userPhoto {

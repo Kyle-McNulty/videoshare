@@ -365,39 +365,43 @@ function renderMovie(snapshot) {
   title.innerHTML = "File Name: " + element.fileName
     .substring(0, element.fileName.length - 4);  // cuts off .mp4
 
-
   /* Author */
   var authorDiv = document.createElement("div");
   authorDiv.setAttribute("class", "mdl-card__supporting-text");
   var author = document.createElement("p");
   var name = element.createdBy.displayName;
+
   // var description = "This is a description of the video that can be added in by the user using the metadata property";
   var description = element.title;
   
   var br = document.createElement("br");
   author.innerHTML = "Uploaded by " + name.bold() + "  " + moment(element.createdOn).fromNow() ;
+  var description = "This is a description of the video:" + inputCaption;
+  var date = element.createdOn;
+  console.log(date);
+  date = moment(date).fromNow();
+  var br = document.createElement("br");
+  var avatar = document.createElement("img");
+  avatar.setAttribute("class", "description-avatar");
+  avatar.setAttribute("src", element.createdBy.emailHashing);
+
+  author.appendChild(avatar);
+  author.innerHTML += name.bold() + " uploaded this " + date;
   author.appendChild(br);
 
   author.innerHTML += description;
   author.appendChild(br);
   authorDiv.appendChild(author);
 
-  /* Video Description */
-  // var descriptionDiv = document.createElement("div");
-  // descriptionDiv.setAttribute("class", "mdl-card__supporting-text");
-
-  // authorDiv.appendChild(description);
+  /* Delete Button */
   var buttonDiv = document.createElement("div");
   var button = document.createElement("button");
   button.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised");
   button.innerHTML = "Delete";
   button.addEventListener('click', function () {
     handleDelete(snapshot);
-
   });
   buttonDiv.appendChild(button);
-
-
 
 
   /* Appends all child elements to the main video cell object */
@@ -410,8 +414,7 @@ function renderMovie(snapshot) {
   cell.appendChild(display);
   cell.appendChild(comments);
   cell.appendChild(buttonDiv);
-  // cell.appendChild(descriptionDiv);
-
+  
   /* Appends the cell to the entire feed of videos */
   videoList.appendChild(cell);
 }
