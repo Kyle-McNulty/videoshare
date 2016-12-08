@@ -175,11 +175,29 @@ function renderMovie(snapshot) {
 
   // adding favorite and comment input
   var feedback = document.createElement("div");
+  var likeSpan = document.createElement("span");
+
+  var likeButton = document.createElement("button");
+  likeButton.setAttribute("class","mdl-button mdl-js-button mdl-button--icon")
   var like = document.createElement("i");
-  like.innerHTML = "favorite";
-  like.setAttribute("class", "material-icons");
+  like.innerHTML = "favorite border";
+  like.setAttribute("class", "material-icons  mdl-button--colored red");
+  likeButton.appendChild(like);
+  likeSpan.appendChild(likeButton);
+
+  // var dislikeButton = document.createElement("button");
+  // dislikeButton.setAttribute("class","mdl-button mdl-js-button mdl-button--icon")
+  // var dislike = document.createElement("i");
+  // dislike.innerHTML = "favorite";
+  // like.setAttribute("class", "material-icons  mdl-button--colored red");
+  // like.setAttribute("display","none");
+  // likeButton.appendChild(like);
+  // likeSpan.appendChild(likeButton);
+
+
   var comment = document.createElement("form");
   comment.setAttribute("action", "#");
+  comment.setAttribute("display","inline");
   var comment_div = document.createElement("div");
   comment_div.setAttribute("class", "mdl-textfield mdl-js-textfield");
   var comment_input = document.createElement("input");
@@ -206,7 +224,7 @@ function renderMovie(snapshot) {
     });
   });
 
-  like.addEventListener("click", function () {
+  likeButton.addEventListener("click", function () {
     // console.log("count time is ", time);
     var favoriteUserRef = snapshot.ref.child("favoriteUser");
     var countRef = snapshot.ref.child("Fcount");
@@ -316,7 +334,7 @@ query.once('value', function(snapshot) {
     comment_div.appendChild(comment_label);
     comment.appendChild(comment_div);
 
-    feedback.appendChild(like);
+    feedback.appendChild(likeSpan);
     feedback.appendChild(comment);
 
     /* Handles creation of the video element */
