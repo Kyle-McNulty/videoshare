@@ -179,7 +179,8 @@ function renderMovie(snapshot) {
   comment_input.addEventListener("change", function () {
     var input = comment_input.value;
     var commentRef = snapshot.ref.child("comments");
-    var user = element.createdBy.displayName;
+    var user = currentUser.displayName;
+    //console.log(user);
     console.log("display name is ", user);
     commentRef.push({
       input: input,
@@ -260,13 +261,13 @@ function renderMovie(snapshot) {
       var commentSpan = document.createElement("span");
       commentSpan.classList += " commentSpan";
       var commentWriting = document.createElement("p");
-      commentWriting.textContent = "-" + element.comments[key].input;
+      commentWriting.textContent = element.comments[key].input;
       var commentUser = document.createElement("p");
-      commentUser.textContent = " \xa0\xa0\xa0by " + element.comments[key].user;
+  commentUser.textContent = element.comments[key].user + ":\xa0 ";
       commentUser.classList += " commentUser";
       
-      commentSpan.appendChild(commentWriting);
       commentSpan.appendChild(commentUser);
+      commentSpan.appendChild(commentWriting);
       comments.appendChild(commentSpan);
     }
   }
