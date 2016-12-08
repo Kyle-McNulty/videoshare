@@ -1,3 +1,9 @@
+/**
+ * Authors: Calvin Korver, Kyle McNulty, Patrick Yi
+ * 
+ * This handles the signing in page
+ */
+
 "use strict";
 
 var signInForm = document.getElementById("signin-form");

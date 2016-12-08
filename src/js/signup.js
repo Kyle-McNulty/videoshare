@@ -1,3 +1,9 @@
+/**
+ * Authors: Calvin Korver, Kyle McNulty, Patrick Yi
+ * 
+ * This handles the sign up page
+ * */
+
 "use strict";
 
 var signUpForm = document.getElementById("signup-form");
@@ -31,35 +37,39 @@ function toggleFeedback() {
     loading.classList.toggle("hidden");
 }
 
-signUpForm.addEventListener("submit", function(evt) {
+signUpForm.addEventListener("submit", function (evt) {
     evt.preventDefault();
-    if(checks()) {
+    if (checks()) {
         toggleFeedback();
         firebase.auth().createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
-            .then(function(user) {
+            .then(function (user) {
+                /* Pushes bio information to database */
                 var bioRef = firebase.database().ref("bio");
-                var bioObject = {email: emailInput.value,
-                            bio: bioInput.value}
+                var bioObject = {
+                    email: emailInput.value,
+                    bio: bioInput.value
+                }
                 bioRef.push(bioObject);
 
+                /* Updates the users profile */
                 user.sendEmailVerification();
                 return user.updateProfile({
                     emailVerified: false,
                     displayName: displayNameInput.value,
                     // bio: "test",
-                    photoURL: "https://www.gravatar.com/avatar/" + 
+                    photoURL: "https://www.gravatar.com/avatar/" +
                     md5(emailInput.value),
                 });
             })
 
-            .then(function() {
+            .then(function () {
                 toggleFeedback();
                 window.location = "videos.html";
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 alert(err.message);
             })
-            
+
     }
     return false;
 });

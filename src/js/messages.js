@@ -1,6 +1,10 @@
+/*
+Authors: Calvin Korver, Kyle McNulty, Patrick Yi
+This javascript class handles the main index.html file which is the main video feed
+*/
 
 
-  /*
+/*
 Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 This javascript class handles the main index.html file which is the main video feed
 */
@@ -25,6 +29,19 @@ var personalRef = firebase.database().ref("personal");
 /* Files upload stuff */
 var currentRef = storage.ref();
 var videoList = document.querySelector(".video-list");
+
+
+var inputCaption;
+function uploadCaption(){
+      inputCaption="";
+      var caption = prompt("Enter your input below", "Write a caption..");
+    
+    if (caption != null) {
+      inputCaption = caption;
+    }
+}
+
+
 
 function handleFiles(fileList) {
   if (currentUser.emailVerified) {
@@ -53,14 +70,13 @@ function handleFiles(fileList) {
         comments: {
 
         },
-        commentsUser: {
-
-        },
+        title:inputCaption,
         Fcount: 0,
         liked: true,
         favoriteUser: {
 
-        }
+        },
+
       };
       personalRef.push(info);
     })    // upload the file into storage
@@ -105,9 +121,10 @@ function handleDelete(snapshot) {
   }
 
   dialog.showModal();
-
+  var itemRef = currentRef.child(currentUser.uid + "/" + snapshot.val().fileName)
   dialog.querySelector('.delete').addEventListener('click', function () {
     snapshot.ref.remove();
+    itemRef.delete();
     dialog.close();
   });
 
@@ -166,11 +183,11 @@ function renderMovie(snapshot) {
   cell.setAttribute("class", "demo-card-wide mdl-card mdl-shadow--2dp video-cell");
 
   // adding favorite and comment input
-  var feedback = document.createElement("div");
- var likeSpan = document.createElement("span");
+  var feedback = document.createElement("span");
 
+  var likeSpan = document.createElement("span");
   var likeButton = document.createElement("button");
-  likeButton.setAttribute("class","mdl-button mdl-js-button mdl-button--icon")
+  likeButton.setAttribute("class", "mdl-button mdl-js-button mdl-button--icon")
   var like = document.createElement("i");
   like.innerHTML = "favorite border";
   like.setAttribute("class", "material-icons  mdl-button--colored red");
@@ -187,11 +204,12 @@ function renderMovie(snapshot) {
   // like.setAttribute("display","none");
   // likeButton.appendChild(like);
   // likeSpan.appendChild(likeButton);
-
+ 
 
   var comment = document.createElement("form");
   comment.setAttribute("action", "#");
-  comment.setAttribute("display","inline");
+  comment.setAttribute("display", "inline");
+
 
   var comment = document.createElement("form");
   comment.setAttribute("action", "#");
@@ -211,22 +229,25 @@ function renderMovie(snapshot) {
     });
   });
 
-  // likeButton.addEventListener("click", function () {
-  //   // console.log("count time is ", time);
-  //   var favoriteUserRef = snapshot.ref.child("favoriteUser");
-  //   var countRef = snapshot.ref.child("Fcount");
-  //   var likedRef = snapshot.ref.child("liked");
-  //   favoriteUserRef.push({
-  //     user: element.createdBy.displayName
-  //   });
-  //   if (element.liked) {
-  //     countRef.set(element.Fcount + 1);
-  //     likedRef.set(!element.liked);
-  //   } else {
-  //     countRef.set(element.Fcount - 1);
-  //     likedRef.set(!element.liked);
-  //   }
-  // });
+  likeButton.addEventListener("click", function () {
+    // console.log("count time is ", time);
+    var favoriteUserRef = snapshot.ref.child("favoriteUser");
+    var countRef = snapshot.ref.child("Fcount");
+    var likedRef = snapshot.ref.child("liked");
+    favoriteUserRef.push({
+      user: element.createdBy.displayName
+    });
+    if (element.liked) {
+      countRef.set(element.Fcount + 1);
+      likedRef.set(!element.liked);
+    } else {
+      countRef.set(element.Fcount - 1);
+      likedRef.set(!element.liked);
+    }
+  });
+
+
+
 
 
   var display = document.createElement("div");  // display the like count and all comment
@@ -240,19 +261,19 @@ function renderMovie(snapshot) {
   favoriteBy.innerHTML = "Like by " + element.Fcount + " people";
 
   // for each child:
-  var query = firebase.database().ref("comments").orderByKey();
-  console.log("notice here ", query);
+  // var query = firebase.database().ref("comments").orderByKey();
+  // console.log("notice here ", query);
 
 
-  query.once('value', function (snapshot) {
-    snapshot.forEach(function (childSnapshot) {
-      var childKey = childSnapshot.key();
-      console.log("Key ", key);
-      var childData = childSnapshot.val();
-      console.log("childData", childData);
-      // ...
-    });
-  });
+  // query.once('value', function (snapshot) {
+  //   snapshot.forEach(function (childSnapshot) {
+  //     var childKey = childSnapshot.key();
+  //     console.log("Key ", key);
+  //     var childData = childSnapshot.val();
+  //     console.log("childData", childData);
+  //     // ...
+  //   });
+  // });
 
 
   display.appendChild(favoriteList);
@@ -272,10 +293,23 @@ function renderMovie(snapshot) {
 
   feedback.appendChild(likeSpan);
 
+
+
+  comment_input.setAttribute("class", "mdl-textfield__input");
+  comment_input.setAttribute("type", "text");
+  comment_input.setAttribute("id", "sample1");
+  var comment_label = document.createElement("label");
+  comment_label.setAttribute("class", "mdl-textfield__label");
+  comment_label.setAttribute("for", "sample1");
+  comment_div.appendChild(comment_input);
+  comment_div.appendChild(comment_label);
+  comment.appendChild(comment_div);
+
+
   display.classList += " display";
   feedback.classList += " display";
 
-
+  var test = "test name:";
   var comments = document.createElement("ul");
   if (element.comments) {
     // console.log(element.comments[0]);
@@ -287,19 +321,27 @@ function renderMovie(snapshot) {
       var commentSpan = document.createElement("span");
       commentSpan.classList += " commentSpan";
       var commentWriting = document.createElement("p");
-      commentWriting.textContent = "-" + element.comments[key].input;
+      commentWriting.textContent = "\xa0" + element.comments[key].input;
       var commentUser = document.createElement("p");
-      commentUser.textContent = " \xa0\xa0\xa0 by " + element.comments[key].user;
+      commentUser.setAttribute("class","commentUser");
+      //" \xa0\xa0\xa0 by " + 
+      console.log(element.createdBy.displayName);
+      commentUser.textContent = currentUser.displayName + ": ";
+      test += commentUser.textContent;
       commentUser.classList += " commentUser";
-      
-      commentSpan.appendChild(commentWriting);
+
       commentSpan.appendChild(commentUser);
+      commentSpan.appendChild(commentWriting);
+
       comments.appendChild(commentSpan);
     }
   }
-  
+  console.log(test);
+
+
 
   feedback.appendChild(likeSpan);
+
 
   feedback.appendChild(comment);
 
@@ -322,7 +364,7 @@ function renderMovie(snapshot) {
   titleDiv.setAttribute("class", "mdl-card__title");
   var title = document.createElement("h2");
   title.setAttribute("class", "mdl-card__title-text");
-  title.innerHTML = element.fileName
+  title.innerHTML = "File Name: " + element.fileName
     .substring(0, element.fileName.length - 4);  // cuts off .mp4
 
 
@@ -331,9 +373,11 @@ function renderMovie(snapshot) {
   authorDiv.setAttribute("class", "mdl-card__supporting-text");
   var author = document.createElement("p");
   var name = element.createdBy.displayName;
-  var description = "This is a description of the video that can be added in by the user using the metadata property";
+  // var description = "This is a description of the video that can be added in by the user using the metadata property";
+  var description = element.title;
+  
   var br = document.createElement("br");
-  author.innerHTML = "Uploaded by " + name.bold();
+  author.innerHTML = "Uploaded by " + name.bold() + "  " + moment(element.createdOn).fromNow() ;
   author.appendChild(br);
 
   author.innerHTML += description;

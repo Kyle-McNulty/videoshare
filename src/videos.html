@@ -1,8 +1,5 @@
 <!--
-Calvin Korver
-Info 343
-Services Challenge
-11-2-16
+Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 -->
 
 <html>
@@ -17,9 +14,12 @@ Services Challenge
 	<!-- Material Design icon font -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+
 	<!-- Header Element -->
 
 	<body>
+
 		<!--<video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
   poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
     <source src="MY_VIDEO.mp4" type='video/mp4'>
@@ -43,14 +43,15 @@ Services Challenge
 							<label class="mdl-textfield__label" for="file_input_text"></label>
 						</div>
 						<div id="tt1" class="file_input">
-							<label class="image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
-									<i class="material-icons">file_upload</i>
+							<label onclick="uploadCaption()"  class="uploadButton image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
+									<i class="material-icons ">file_upload</i>
+									
 									<!-- Simple Tooltip -->
 									<div class="mdl-tooltip" data-mdl-for="tt1">
 									Upload
 									</div>
 									<input id="file_input_file" class="none" type="file" onChange = "handleFiles(this.files)"/>
-								</label>
+							</label>
 						</div>
 					</div>
 			</header>
@@ -58,30 +59,29 @@ Services Challenge
 				<span class="mdl-layout-title">Xtreme Videos</span>
 				<img id="menu-logo" src="logo.png" alt="SKiing logo">
 
-				
+
 				<span class="mdl-layout-title">Main Menu</span>
 				<nav class="mdl-navigation">
+
+
 
 					<a class="mdl-navigation__link" id="feed-page-button" href="videos.html">Video Feed</a>
 					<a class="mdl-navigation__link" id="profile-page-button" href="profile.html">My Profile</a>
 					<div id="signout-button">
-						<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out</button>
-
+						<button type="button" class=" mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="sign-out-button">Sign Out</button>
 
 					</div>
-					<!--<a class="mdl-navigation__link" href="">Link</a>-->
-					<!--<a class="mdl-navigation__link" href="">Link</a>-->
 				</nav>
 			</div>
 			<main class="mdl-layout__content">
 				<div class="page-content">
 					<div class="content-grid mdl-grid">
 
-
 						<div class="mdl-cell mdl-cell--12-col">
 							<div class="mdl-cell mdl-cell--12-col">
 								<h3 id="main-header"> Latest Uploads: </h2>
 							</div>
+
 
 							<ul class="video-list" id="videos"> </ul>
 						</div>
@@ -90,7 +90,8 @@ Services Challenge
 				</div>
 			</main>
 		</div>
-		<!--Actual Dialog Box-->
+
+		<!--Dialog Box-->
 		<dialog class="mdl-dialog" id="delete-confirmation">
 			<h4 class="mdl-dialog__title">Delete?</h4>
 			<div class="mdl-dialog__content">
@@ -105,22 +106,6 @@ Services Challenge
 			</div>
 		</dialog>
 	</body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<!--Firebase JavaScript library-->
 	<script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
 	<!--Moment.js library (http://momentjs.com/) for formatting dates-->
