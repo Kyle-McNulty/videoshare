@@ -3,12 +3,6 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 This javascript class handles the main index.html file which is the main video feed
 */
 
-
-/*
-Authors: Calvin Korver, Kyle McNulty, Patrick Yi
-This javascript class handles the main index.html file which is the main video feed
-*/
-
 var currentUser;
 var authProvider = new firebase.auth.GithubAuthProvider();
 firebase.auth().onAuthStateChanged(function (user) {
@@ -173,18 +167,27 @@ function changeState() {
 }
 
 function likeHandler(element, snapshot) {
-  var favoriteUserRef = snapshot.ref.child("favoriteUser");
-  var countRef = snapshot.ref.child("Fcount");
-  var likedRef = snapshot.ref.child("liked");
-  favoriteUserRef.push({
-    user: element.createdBy.displayName
-  });
-  if (element.liked) {
-    countRef.set(element.Fcount + 1);
-    likedRef.set(!element.liked);
+ var countRef = snapshot.ref.child("Fcount");
+ var likedBy = snapshot.ref.child("likedBy");
+ var likedByUser = {user: currentUser.displayName}
+  // if current user has already like this video, unlike the video
+  if(element.likedBy){
+    var alreadyLiked = true;
+    for (var key in element.likedBy) {
+      if (element.likedBy[key].user != currentUser.displayName) {
+        alreadyLiked = false;
+        countRef.set(element.Fcount + 1);
+        likedBy.push(likedByUser);
+      }
+    }
+    if(alreadyLiked) {
+        countRef.set(element.Fcount - 1);
+        likedBy.remove(likedBy.user);
+    }
+    //likedBy.remove(likedBy.user);
   } else {
-    countRef.set(element.Fcount - 1);
-    likedRef.set(!element.liked);
+    countRef.set(element.Fcount + 1);
+    likedBy.push(likedByUser);
   }
 }
 
@@ -263,24 +266,17 @@ function renderMovie(snapshot) {
 
 
   var favoriteBy = document.createElement("span");
-  favoriteBy.innerHTML = "" + element.Fcount + " like";
+  var likeString = "likes";
+  if(element.Fcount == 1) {
+    likeString = "like";
+  }
+  favoriteBy.innerHTML = "" + element.Fcount + " " + likeString;
 
   /* Appends the commenting pencil icon onto our comment input span */
   commentForm.appendChild(favoriteBy);
   commentForm.appendChild(likeButton);
   commentForm.appendChild(commentPencil);
   commentForm.appendChild(comment_input_span);
-
-  comment_input.setAttribute("class", "mdl-textfield__input");
-  comment_input.setAttribute("type", "text");
-  comment_input.setAttribute("id", "sample1");
-  var comment_label = document.createElement("label");
-  comment_label.setAttribute("class", "mdl-textfield__label");
-  comment_label.setAttribute("for", "sample1");
-  comment_div.appendChild(comment_input);
-  comment_div.appendChild(comment_label);
-  commentForm.appendChild(comment_div);
-
 
   display.classList += " display";
   feedBackDiv.classList += " display";
@@ -392,7 +388,6 @@ function render(snapshot) {
 
 /* Changes the page to profile page from button input in nav bar */
 document.getElementById("profile-page-button").addEventListener("click", function () {
-  console.log("Changing page");
   window.location = "../profile.html";
 });
 
