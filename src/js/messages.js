@@ -339,11 +339,9 @@ function renderMovie(snapshot) {
   var author = document.createElement("p");
   var name = element.createdBy.displayName;
 
-  // var description = "This is a description of the video that can be added in by the user using the metadata property";
   var description = element.title;
-
   var br = document.createElement("br");
-  var description = "This is a description of the video: " + element.title;
+  var description = "Description: " + element.title;
   var date = element.createdOn;
   console.log(date);
   date = moment(date).fromNow();
@@ -369,7 +367,6 @@ function renderMovie(snapshot) {
     handleDelete(snapshot);
   });
   buttonDiv.appendChild(button);
-
 
   /* Appends all child elements to the main video cell object */
   titleDiv.appendChild(title);
