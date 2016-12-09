@@ -120,6 +120,10 @@ button {
     padding-top:12px;;
 }
 
+#hamburger-file-upload {
+    margin: 10px;
+}
+
 
 .mdl-layout__content {
     margin:30px;
@@ -169,6 +173,10 @@ button {
     margin: 20px;
     width: 100%;
     max-width: 1000px;
+}
+
+video {
+    z-index: 99;
 }
 
 .mdl-card__media {
@@ -288,4 +296,5 @@ button {
     font-family: 'Lobster';
     font-size: 30px;
 }
+
 

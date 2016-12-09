@@ -207,8 +207,13 @@ function renderMovie(snapshot) {
 
   /* Creating the pencil icon for commenting */
   var commentPencil = document.createElement("i");
+  commentPencil.setAttribute("id", "commentPencil");
   commentPencil.classList += " fa fa-pencil";
   commentPencil.setAttribute("aria-hidden", "true");
+
+  var commentTooltip = document.createElement("div");
+  commentTooltip.setAttribute("class", "mdl-tooltip");
+  commentTooltip.setAttribute("data-mdl-for", "commentPencil");
 
 
   var likeSpan = document.createElement("span");
@@ -259,6 +264,7 @@ function renderMovie(snapshot) {
   comment_label.setAttribute("class", "mdl-textfield__label");
   comment_label.setAttribute("for", "sample1");
   commentSpan.appendChild(commentPencil);
+  commentSpan.appendChild(commentTooltip);
   commentSpan.appendChild(comment_input);
   comment_div.appendChild(commentSpan);
   comment_div.appendChild(comment_label);
