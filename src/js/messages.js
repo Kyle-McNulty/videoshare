@@ -3,12 +3,6 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 This javascript class handles the main index.html file which is the main video feed
 */
 
-
-/*
-Authors: Calvin Korver, Kyle McNulty, Patrick Yi
-This javascript class handles the main index.html file which is the main video feed
-*/
-
 var currentUser;
 var authProvider = new firebase.auth.GithubAuthProvider();
 firebase.auth().onAuthStateChanged(function (user) {
@@ -29,14 +23,37 @@ var personalRef = firebase.database().ref("personal");
 /* Files upload stuff */
 var currentRef = storage.ref();
 var videoList = document.querySelector(".video-list");
-
 var inputCaption;
+var liked = false;
+var spinner = document.querySelector(".mdl-spinner");
 
+function getCaption(uploadTask) {
+  uploadTask.pause();
+  inputCaption = "";
+  var dialogCap = document.querySelector(".caption");
+  var input = document.getElementById("captionInput");
+  var doneButton = document.querySelector(".done");
+  var cancelButton = document.querySelector(".cancel");
 
+  dialogCap.showModal();
+  cancelButton.addEventListener("click", function () {
+    uploadTask.cancel();
+    dialogCap.close();
+  });
+
+  doneButton.addEventListener("click", function () {
+    console.log("input !!!", input.value);
+    var replace = input.value;
+    if (replace != null) {
+      inputCaption = replace;
+    }
+    uploadTask.resume();
+    dialogCap.close();
+  });
+}
 
 function handleFiles(fileList) {
   if (currentUser.emailVerified) {
-
     /* Iterates over the returned FileList object */
     var file = fileList[0];
     var fileName = file.name;
@@ -45,15 +62,14 @@ function handleFiles(fileList) {
       return;
     }
 
+    // var caption = prompt("Enter your input below", "Write a caption..");
+    // if (caption != null) {
+    //   inputCaption = caption;
+    // }
     var storageRef = storage.ref(currentUser.uid + "/" + file.name);
+
     var uploadTask = storageRef.put(file); // adding to the storage 
-
-    inputCaption = "";
-    var caption = prompt("Enter your input below", "Write a caption..");
-
-    if (caption != null) {
-      inputCaption = caption;
-    }
+    inputCaption = getCaption(uploadTask);
 
     uploadTask.then(function () { // adding to the database
       var info = {
@@ -71,23 +87,25 @@ function handleFiles(fileList) {
         },
         title: inputCaption,
         Fcount: 0,
-        liked: true,
         favoriteUser: {
 
         },
-
       };
       var item = personalRef.push(info);
       // item.setWithPriority(personalRef, 0 - Date.now())
     })    // upload the file into storage
+
   } else {
     alert("You must verify your email before uploading");
   }
 
-
-
   uploadTask.on("state_changed", function (snapshot) {
     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    if (progress < 100) {
+      spinner.classList.add("is-active");
+    } else {
+      spinner.classList.remove("is-active");
+    }
     console.log('Upload is ' + progress + '% done');
     switch (snapshot.state) {
       case firebase.storage.TaskState.PAUSED: // or 'paused'
@@ -113,7 +131,7 @@ function handleDelete(snapshot) {
     alert("You cant change or delete a message that isn't yours");
     return;
   }
-  var dialog = document.querySelector('.mdl-dialog');
+  var dialog = document.querySelector('.deleteDialog');
 
   /* If no support for dialogs */
   if (!dialog.showModal) {
@@ -173,18 +191,39 @@ function changeState() {
 }
 
 function likeHandler(element, snapshot) {
+  // var countRef = snapshot.ref.child("Fcount");
+  // var likedBy = snapshot.ref.child("likedBy");
+  // var likedByUser = { user: currentUser.displayName }
+  // // if current user has already like this video, unlike the video
+  // if (element.likedBy) {
+  //   var alreadyLiked = true;
+  //   for (var key in element.likedBy) {
+  //     if (element.likedBy[key].user != currentUser.displayName) {
+  //       alreadyLiked = false;
+  //       countRef.set(element.Fcount + 1);
+  //       likedBy.push(likedByUser);
+  //     }
+  //   }
+  //   if (alreadyLiked) {
+  //     countRef.set(element.Fcount - 1);
+  //     likedBy.remove(likedBy.user);
+  //   }
+  //   //likedBy.remove(likedBy.user);
+  // } else {
+  //   countRef.set(element.Fcount + 1);
+  //   likedBy.push(likedByUser);
+  // }
   var favoriteUserRef = snapshot.ref.child("favoriteUser");
   var countRef = snapshot.ref.child("Fcount");
-  var likedRef = snapshot.ref.child("liked");
   favoriteUserRef.push({
-    user: element.createdBy.displayName
+    user: currentUser.displayName,
   });
-  if (element.liked) {
+  if (!liked) {
     countRef.set(element.Fcount + 1);
-    likedRef.set(!element.liked);
+    liked = !liked;
   } else {
     countRef.set(element.Fcount - 1);
-    likedRef.set(!element.liked);
+    liked = !liked;
   }
 }
 
@@ -192,6 +231,7 @@ function likeHandler(element, snapshot) {
 function renderMovie(snapshot) {
   console.log(snapshot.val());
   //console.log("key here", snapshot.key);
+
 
   /* Grabs the element from Firebase Storage */
   var element = snapshot.val();
@@ -204,8 +244,13 @@ function renderMovie(snapshot) {
 
   /* Creating the pencil icon for commenting */
   var commentPencil = document.createElement("i");
+  commentPencil.setAttribute("id", "commentPencil");
   commentPencil.classList += " fa fa-pencil";
   commentPencil.setAttribute("aria-hidden", "true");
+
+  var commentTooltip = document.createElement("div");
+  commentTooltip.setAttribute("class", "mdl-tooltip");
+  commentTooltip.setAttribute("data-mdl-for", "commentPencil");
 
 
   var likeSpan = document.createElement("span");
@@ -214,8 +259,15 @@ function renderMovie(snapshot) {
   var like = document.createElement("i");
   like.innerHTML = "favorite border";
   like.setAttribute("class", "material-icons  mdl-button--colored red");
+  var favoriteBy = document.createElement("span");
+  var likeString = "likes";
+  if (element.Fcount == 1) {
+    likeString = "like";
+  }
+  favoriteBy.innerHTML = "" + element.Fcount + " " + likeString;
   likeButton.appendChild(like);
   likeSpan.appendChild(likeButton);
+  likeSpan.appendChild(favoriteBy);
 
 
   /* Creates the form for the comment inputs */
@@ -256,38 +308,30 @@ function renderMovie(snapshot) {
   comment_label.setAttribute("class", "mdl-textfield__label");
   comment_label.setAttribute("for", "sample1");
   commentSpan.appendChild(commentPencil);
+  commentSpan.appendChild(commentTooltip);
   commentSpan.appendChild(comment_input);
   comment_div.appendChild(commentSpan);
   comment_div.appendChild(comment_label);
   comment_input_span.appendChild(comment_div);
 
 
-  var favoriteBy = document.createElement("span");
-  favoriteBy.innerHTML = "" + element.Fcount + " like";
+
 
   /* Appends the commenting pencil icon onto our comment input span */
-  commentForm.appendChild(favoriteBy);
-  commentForm.appendChild(likeButton);
+  // commentForm.appendChild(favoriteBy);
+  // commentForm.appendChild(likeButton);
   commentForm.appendChild(commentPencil);
   commentForm.appendChild(comment_input_span);
-
-  comment_input.setAttribute("class", "mdl-textfield__input");
-  comment_input.setAttribute("type", "text");
-  comment_input.setAttribute("id", "sample1");
-  var comment_label = document.createElement("label");
-  comment_label.setAttribute("class", "mdl-textfield__label");
-  comment_label.setAttribute("for", "sample1");
-  comment_div.appendChild(comment_input);
-  comment_div.appendChild(comment_label);
-  commentForm.appendChild(comment_div);
-
 
   display.classList += " display";
   feedBackDiv.classList += " display";
 
+
+function renderComment(){
+
+}
   var comments = document.createElement("ul");
   if (element.comments) {
-
     for (var key in element.comments) {
       var commentSpan = document.createElement("span");
       commentSpan.classList += " commentSpan";
@@ -308,7 +352,7 @@ function renderMovie(snapshot) {
   /* Appends the "like" span containing like button onto the feedback div */
   feedBackDiv.appendChild(likeSpan);
   feedBackDiv.appendChild(commentForm);
-
+  
   /* Handles creation of the video element */
   var media = document.createElement("div");
   var source = document.createElement('source');
@@ -337,13 +381,9 @@ function renderMovie(snapshot) {
   var author = document.createElement("p");
   var name = element.createdBy.displayName;
 
-  // var description = "This is a description of the video that can be added in by the user using the metadata property";
   var description = element.title;
-
   var br = document.createElement("br");
-  // author.innerHTML = "Uploaded by " + name.bold() + "  " + moment(element.createdOn).fromNow();
-
-  var description = "This is a description of the video: " + element.title;
+  var description = "Description: " + element.title;
   var date = element.createdOn;
   console.log(date);
   date = moment(date).fromNow();
@@ -370,7 +410,6 @@ function renderMovie(snapshot) {
   });
   buttonDiv.appendChild(button);
 
-
   /* Appends all child elements to the main video cell object */
   titleDiv.appendChild(title);
   media.appendChild(video);
@@ -395,7 +434,6 @@ function render(snapshot) {
 
 /* Changes the page to profile page from button input in nav bar */
 document.getElementById("profile-page-button").addEventListener("click", function () {
-  console.log("Changing page");
   window.location = "../profile.html";
 });
 

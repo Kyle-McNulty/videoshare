@@ -9,6 +9,7 @@ body, input, button {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     display: flex;
+    /*background-color: #EBEBEB;*/
 }
 
 input {
@@ -40,7 +41,7 @@ h1 {
 }
 
 hr {
-    border-color: deeppink;
+    border-color: dimgrey;
     border-width: 5px;
 }
 
@@ -253,8 +254,6 @@ button {
   display: none;
 }
 
-
-
 .red { 
     color:#FF5252;
 
@@ -270,11 +269,6 @@ button {
     display: flex;
 }
 
-.heart {
-    color: red;
-    cursor: pointer;
-    margin-left: 15px;
-}
 
 .display {
     margin-left: 15px;
