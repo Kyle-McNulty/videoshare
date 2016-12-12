@@ -1,5 +1,4 @@
 
-
 /* Handles firebase authentication etc. */
 var currentUser;
 var authProvider = new firebase.auth.GithubAuthProvider();
@@ -279,8 +278,6 @@ function renderEachBio(snapshot) {
         }
     }
 };
-
-
 
 
 
