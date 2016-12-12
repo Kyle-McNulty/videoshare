@@ -49,6 +49,7 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 						</div>
 						<div id="tt1" class="file_input">
 							<label onclick="uploadCaption()" class="uploadButton image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
+
 									<i class="material-icons ">file_upload</i>
 									
 									<!-- Simple Tooltip -->
@@ -58,6 +59,7 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 									<input id="file_input_file" class="none" type="file" onChange = "handleFiles(this.files)"/>
 							</label>
 						</div>
+						<div class="mdl-spinner mdl-js-spinner "></div>
 					</div>
 			</header>
 			<div class="mdl-layout__drawer">
@@ -109,6 +111,32 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 					</div>
 			</div>
 			</main>
+		</div>
+
+		<!--Dialog Box-->
+		<dialog class="mdl-dialog caption">
+			<div class="mdl-dialog__content">
+				<p>Enter your Description of the video here</p>
+				<form action="#">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input"type="text" id="captionInput" />
+						<label class="mdl-textfield__label" for="description">Description</label>
+					</div>
+				</form>
+
+			</div>
+			<div class="mdl-dialog__actions">
+				<button type="button" class="mdl-button done" id="delete-it"> Done</button>
+				<button type="button" class="mdl-button cancel" id="keep-it">Cancel</button>
+			</div>
+		</dialog>
+
+		<dialog class="mdl-dialog deleteDialog" id="delete-confirmation">
+			<h4 class="mdl-dialog__title">Delete?</h4>
+			<div class="mdl-dialog__content">
+				<p>
+					Are you sure you want to delete this video? You will not be able to reverse this action!
+				</p>
 			</div>
 
 			<!--Dialog Box-->

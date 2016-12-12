@@ -23,14 +23,37 @@ var personalRef = firebase.database().ref("personal");
 /* Files upload stuff */
 var currentRef = storage.ref();
 var videoList = document.querySelector(".video-list");
-
 var inputCaption;
+var liked = false;
+var spinner = document.querySelector(".mdl-spinner");
 
+function getCaption(uploadTask) {
+  uploadTask.pause();
+  inputCaption = "";
+  var dialogCap = document.querySelector(".caption");
+  var input = document.getElementById("captionInput");
+  var doneButton = document.querySelector(".done");
+  var cancelButton = document.querySelector(".cancel");
 
+  dialogCap.showModal();
+  cancelButton.addEventListener("click", function () {
+    uploadTask.cancel();
+    dialogCap.close();
+  });
+
+  doneButton.addEventListener("click", function () {
+    console.log("input !!!", input.value);
+    var replace = input.value;
+    if (replace != null) {
+      inputCaption = replace;
+    }
+    uploadTask.resume();
+    dialogCap.close();
+  });
+}
 
 function handleFiles(fileList) {
   if (currentUser.emailVerified) {
-
     /* Iterates over the returned FileList object */
     var file = fileList[0];
     var fileName = file.name;
@@ -39,15 +62,14 @@ function handleFiles(fileList) {
       return;
     }
 
+    // var caption = prompt("Enter your input below", "Write a caption..");
+    // if (caption != null) {
+    //   inputCaption = caption;
+    // }
     var storageRef = storage.ref(currentUser.uid + "/" + file.name);
+
     var uploadTask = storageRef.put(file); // adding to the storage 
-
-    inputCaption = "";
-    var caption = prompt("Enter your input below", "Write a caption..");
-
-    if (caption != null) {
-      inputCaption = caption;
-    }
+    inputCaption = getCaption(uploadTask);
 
     uploadTask.then(function () { // adding to the database
       var info = {
@@ -65,23 +87,25 @@ function handleFiles(fileList) {
         },
         title: inputCaption,
         Fcount: 0,
-        liked: true,
         favoriteUser: {
 
         },
-
       };
       var item = personalRef.push(info);
       // item.setWithPriority(personalRef, 0 - Date.now())
     })    // upload the file into storage
+
   } else {
     alert("You must verify your email before uploading");
   }
 
-
-
   uploadTask.on("state_changed", function (snapshot) {
     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    if (progress < 100) {
+      spinner.classList.add("is-active");
+    } else {
+      spinner.classList.remove("is-active");
+    }
     console.log('Upload is ' + progress + '% done');
     switch (snapshot.state) {
       case firebase.storage.TaskState.PAUSED: // or 'paused'
@@ -107,7 +131,7 @@ function handleDelete(snapshot) {
     alert("You cant change or delete a message that isn't yours");
     return;
   }
-  var dialog = document.querySelector('.mdl-dialog');
+  var dialog = document.querySelector('.deleteDialog');
 
   /* If no support for dialogs */
   if (!dialog.showModal) {
@@ -196,6 +220,7 @@ function renderMovie(snapshot) {
   console.log(snapshot.val());
   //console.log("key here", snapshot.key);
 
+
   /* Grabs the element from Firebase Storage */
   var element = snapshot.val();
   var cell = document.createElement("div");
@@ -222,8 +247,15 @@ function renderMovie(snapshot) {
   var like = document.createElement("i");
   like.innerHTML = "favorite border";
   like.setAttribute("class", "material-icons  mdl-button--colored red");
+  var favoriteBy = document.createElement("span");
+  var likeString = "likes";
+  if (element.Fcount == 1) {
+    likeString = "like";
+  }
+  favoriteBy.innerHTML = "" + element.Fcount + " " + likeString;
   likeButton.appendChild(like);
   likeSpan.appendChild(likeButton);
+  likeSpan.appendChild(favoriteBy);
 
 
   /* Creates the form for the comment inputs */
@@ -279,18 +311,20 @@ function renderMovie(snapshot) {
   favoriteBy.innerHTML = "" + element.Fcount + " " + likeString;
 
   /* Appends the commenting pencil icon onto our comment input span */
-  commentForm.appendChild(favoriteBy);
-  commentForm.appendChild(likeButton);
+  // commentForm.appendChild(favoriteBy);
+  // commentForm.appendChild(likeButton);
   commentForm.appendChild(commentPencil);
   commentForm.appendChild(comment_input_span);
 
   display.classList += " display";
   feedBackDiv.classList += " display";
 
-  var test = "test name:";
+
+function renderComment(){
+
+}
   var comments = document.createElement("ul");
   if (element.comments) {
-
     for (var key in element.comments) {
       var commentSpan = document.createElement("span");
       commentSpan.classList += " commentSpan";
@@ -306,13 +340,12 @@ function renderMovie(snapshot) {
       comments.appendChild(commentSpan);
     }
   }
-  console.log(test);
 
 
   /* Appends the "like" span containing like button onto the feedback div */
   feedBackDiv.appendChild(likeSpan);
   feedBackDiv.appendChild(commentForm);
-
+  
   /* Handles creation of the video element */
   var media = document.createElement("div");
   var source = document.createElement('source');
