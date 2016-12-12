@@ -5,37 +5,20 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 <html>
 
 <head>
-	<!-- Material Design Lite -->
-	<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-	<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-pink.min.css" />
-	<script src="moment.js"></script>
 
 	<!-- Material Design icon font -->
+	<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-pink.min.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster" >
 	<link rel="stylesheet" href="css/main.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	<script src="https://use.fontawesome.com/014c9f83e1.js"></script>
-
 	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+	<!-- Material Design Lite -->
+	<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 
 	<!-- Header Element -->
-
 	<body>
-
-		<!--<video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
-  poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-    <source src="MY_VIDEO.mp4" type='video/mp4'>
-
-    <p class="vjs-no-js">
-      To view this video please enable JavaScript, and consider upgrading to a web browser that
-      <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-    </p>
-  </video>-->
-
-
 		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
 			<header class="mdl-layout__header">
@@ -75,20 +58,14 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 					</div>
 				</nav>
 			</div>
+			<!--Main Content for the Page-->
 			<main class="mdl-layout__content">
-				<div class="page-content">
-					<div class="content-grid mdl-grid">
-
-						<div class="mdl-cell mdl-cell--12-col">
-							<div class="mdl-cell mdl-cell--12-col">
-								<h2 id="main-header"> Latest Uploads: </h2>
-							</div>
-
-
-							<ul class="video-list" id="videos"> </ul>
-						</div>
+				<div id="page-content">
+					<div class="mdl-cell mdl-cell--12-col" id="info">
 					</div>
-				</div>
+					<div class="mdl-cell mdl-cell--12-col">
+						<ul class="video-list" id="videos"> </ul>
+					</div>
 				</div>
 			</main>
 		</div>
@@ -103,7 +80,6 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 						<label class="mdl-textfield__label" for="description">Description</label>
 					</div>
 				</form>
-
 			</div>
 			<div class="mdl-dialog__actions">
 				<button type="button" class="mdl-button done" id="delete-it"> Done</button>
@@ -133,6 +109,4 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 	<script src="js/common.js"></script>
 	<script src="js/mutual.js"></script>
 	<script src="js/messages.js"></script>
-
-
 </html>
