@@ -12,6 +12,7 @@ var passwordInput = document.getElementById("password-input");
 var errorMessage = document.getElementById("error-message");
 var loading = document.querySelector(".loading");
 
+/* Checks the password for appropriate length */
 function checks() {
     var checks = false;
     var error = document.createElement("span");
@@ -24,6 +25,7 @@ function checks() {
     return checks;
 }
 
+/* Handles submitting the email and the passord */
 signInForm.addEventListener("submit", function(evt) {
     evt.preventDefault();
     errorMessage.innerHTML = "";

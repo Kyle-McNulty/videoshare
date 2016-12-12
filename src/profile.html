@@ -1,16 +1,15 @@
+<!--Authors: Calvin Korver, Kyle McNulty, Patrick Yi-->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<title>Profile Page</title>
-
 	<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 	<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-pink.min.css" />
-
 	<!-- Material Design icon font -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/profile.css">
 	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
@@ -20,14 +19,11 @@
 </head>
 
 <body>
-
 	<!--Header element-->
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
-			<div class="mdl-layout__header-row">
-			</div>
+			<div class="mdl-layout__header-row"> </div>
 		</header>
-
 		<!--This is the main header of the page-->
 		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
@@ -39,23 +35,18 @@
 					</span>
 					<div class="mdl-layout-spacer"></div>
 					<div class="file_input_div">
-
 						<div id="file_input_text_div" class="mdl-textfield mdl-js-textfield textfield-demo">
 							<input class="file_input_text mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
 							<label class="mdl-textfield__label" for="file_input_text"></label>
 						</div>
-
 					</div>
 			</header>
 			
 			<!--This is the sidebar of the page-->
 			<div class="mdl-layout__drawer">
 				<img id="menu-logo" src="logo.png" alt="SKiing logo">
-				<hr>
-
 				<span class="mdl-layout-title">Main Menu</span>
 				<nav class="mdl-navigation">
-
 					<a class="mdl-navigation__link" id="feed-page-button" href="videos.html">Video Feed</a>
 					<a class="mdl-navigation__link" id="profile-page-button" href="profile.html">My Profile</a>
 					<div id="signout-button">
@@ -68,10 +59,12 @@
 			<!--Main Content for the Page-->
 			<main class="mdl-layout__content">
 				<div id="page-content">
-					<div class="mdl-cell mdl-cell--12-col" id="info">
-					</div>
-					<div class="mdl-cell mdl-cell--12-col">
-						<ul class="video-list" id="videos"> </ul>
+					<div class="content-grid mdl-grid">
+						<div class="mdl-cell mdl-cell--12-col" id="info">
+						</div>
+						<div class="mdl-cell mdl-cell--12-col">
+							<ul class="video-list" id="videos"> </ul>
+						</div>
 					</div>
 				</div>
 			</main>
@@ -94,13 +87,12 @@
 	</body>
 </html>
 
-
-
 <!--Firebase JavaScript library-->
 <script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
 <!--Moment.js library (http://momentjs.com/) for formatting dates-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment-with-locales.min.js"></script>
-<!--our application script-->
+
+<!--Our application scripts-->
 <script src="js/common.js"></script>
 <script src="js/profile.js"></script>
 <script src="js/mutual.js"></script>

@@ -19,6 +19,7 @@ function checks() {
     var checks = false;
     errorMessage.innerHTML = "";
     var error = document.createElement("span");
+    /* Necessary input for the password input */
     if (passwordInput.value != confirmPasswordInput.value) {
         error.textContent = "Passwords do not match!";
     } else if (passwordInput.value.length < 6) {
@@ -61,7 +62,6 @@ signUpForm.addEventListener("submit", function (evt) {
                     md5(emailInput.value),
                 });
             })
-
             .then(function () {
                 toggleFeedback();
                 window.location = "videos.html";
@@ -69,7 +69,6 @@ signUpForm.addEventListener("submit", function (evt) {
             .catch(function (err) {
                 alert(err.message);
             })
-
     }
     return false;
 });
