@@ -10,6 +10,7 @@ Info 343
     max-width: 1000px;
 }
 
+
 body, input, button {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
@@ -25,7 +26,12 @@ input {
 }
 
 h1 {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Lobster', Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.submit-button {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 
@@ -45,11 +51,6 @@ h1 {
     font-size: 24px;
 }
 
-hr {
-    border-color: dimgrey;
-    border-width: 5px;
-}
-
 input:focus {
     color: #000;
  }
@@ -57,10 +58,12 @@ input:focus {
 @media (min-width: 840px) {
     input {
         width: 500px;
+        margin-top: 10px;
     }
 
     .indexBody {
         background-image: url(/candide-background.jpg);
+        
         background-size: cover;
         background-position: center;
     }
@@ -96,7 +99,7 @@ input:focus {
 }
 
 .sign-container {
-    margin-top: 10%;
+    margin-top: 5%;
     margin-left: 15%;
 }
 
@@ -157,6 +160,11 @@ button {
      your background is light. */
   color: black;
 }
+.mdl-layout__drawer {
+    color: black;
+}
+
+
 
 .gravatar-photo {
     width:30px;
@@ -232,9 +240,6 @@ video {
     vertical-align: center;
 }
 
-#feed-page-button {
-    color: black;
-}
 
 #bio-input {
     background-color: white;
