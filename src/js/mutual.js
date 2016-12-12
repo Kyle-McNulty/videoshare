@@ -29,7 +29,6 @@ function getCaption(uploadTask) {
   });
 
   doneButton.addEventListener("click", function () {
-    console.log("input !!!", input.value);
     var replace = input.value;
     if (replace != null) {
       inputCaption = replace;
