@@ -1,15 +1,5 @@
-
-
-// var currentUser;
-// var authProvider = new firebase.auth.GithubAuthProvider();
-// firebase.auth().onAuthStateChanged(function (user) {
-//   if (user) {
-//     currentUser = user;
-//   } else {
-//     firebase.auth().signInWithRedirect(authProvider);
-//     window.location = "index.html";
-//   }
-// });
+// Authors: Kyle McNulty, Calvin Korver, Patrick Yi
+// this file includes features for shared functionality for the profile page and main feed
 
 document.getElementById("sign-out-button").addEventListener("click", function () {
   firebase.auth().signOut();
@@ -49,11 +39,7 @@ function getCaption(uploadTask) {
   });
 }
 
-
-/*
- * This method handles the deleting of a video from the feed
- *  
- **/
+//This method handles the deleting of a video from the feed
 function handleDelete(snapshot) {
   if (snapshot.val().createdBy.uid != currentUser.uid) {
     alert("You cant change or delete a message that isn't yours");
@@ -81,58 +67,33 @@ function handleDelete(snapshot) {
 
 var generalRef = firebase.database().ref("general");
 
-/* 
- * Handles changing text on the material design lite upload selector
- * 
- * Courtesy of Alexander Gaziev from
- * https://codepen.io/alexander-gaziev/pen/JdVQQm 
- * 
- **/
-
-
+// handles the like functionality
 function likeHandler(element, snapshot) {
-  // var countRef = snapshot.ref.child("Fcount");
-  // var likedBy = snapshot.ref.child("likedBy");
-  // var likedByUser = { user: currentUser.displayName }
-  // // if current user has already like this video, unlike the video
-  // if (element.likedBy) {
-  //   var alreadyLiked = true;
-  //   for (var key in element.likedBy) {
-  //     if (element.likedBy[key].user != currentUser.displayName) {
-  //       alreadyLiked = false;
-  //       countRef.set(element.Fcount + 1);
-  //       likedBy.push(likedByUser);
-  //     }
-  //   }
-  //   if (alreadyLiked) {
-  //     countRef.set(element.Fcount - 1);
-  //     likedBy.remove(likedBy.user);
-  //   }
-  //   //likedBy.remove(likedBy.user);
-  // } else {
-  //   countRef.set(element.Fcount + 1);
-  //   likedBy.push(likedByUser);
-  // }
-  var favoriteUserRef = snapshot.ref.child("favoriteUser");
-  var countRef = snapshot.ref.child("Fcount");
-  favoriteUserRef.push({
-    user: currentUser.displayName,
-  });
-  if (!liked) {
+ var countRef = snapshot.ref.child("Fcount");
+ var likedBy = snapshot.ref.child("likedBy");
+ var likedByUser = {user: currentUser.displayName}
+  // if current user has already like this video, unlike the video
+  if(element.likedBy){
+    var alreadyLiked = true;
+    for (var key in element.likedBy) {
+      if (element.likedBy[key].user != currentUser.displayName) {
+        alreadyLiked = false;
+        countRef.set(element.Fcount + 1);
+        likedBy.push(likedByUser);
+      }
+    }
+    if(alreadyLiked) {
+        countRef.set(element.Fcount - 1);
+        likedBy.remove(likedBy.user);
+    }
+   } else {
     countRef.set(element.Fcount + 1);
-    liked = !liked;
-  } else {
-    countRef.set(element.Fcount - 1);
-    liked = !liked;
-  }
+    likedBy.push(likedByUser);
+   }
 }
 
 /* This function renders out each move that is in Firebase storage */
 function renderMovie(snapshot) {
-  console.log(snapshot.val());
-  //console.log("key here", snapshot.key);
-
-
   /* Grabs the element from Firebase Storage */
   var element = snapshot.val();
   var cell = document.createElement("div");
@@ -151,7 +112,6 @@ function renderMovie(snapshot) {
   var commentTooltip = document.createElement("div");
   commentTooltip.setAttribute("class", "mdl-tooltip");
   commentTooltip.setAttribute("data-mdl-for", "commentPencil");
-
 
   var likeSpan = document.createElement("span");
   var likeButton = document.createElement("button");
@@ -214,22 +174,13 @@ function renderMovie(snapshot) {
   comment_div.appendChild(comment_label);
   comment_input_span.appendChild(comment_div);
 
-
-
-
   /* Appends the commenting pencil icon onto our comment input span */
-  // commentForm.appendChild(favoriteBy);
-  // commentForm.appendChild(likeButton);
   commentForm.appendChild(commentPencil);
   commentForm.appendChild(comment_input_span);
 
   display.classList += " display";
   feedBackDiv.classList += " display";
 
-
-function renderComment(){
-
-}
   var comments = document.createElement("ul");
   if (element.comments) {
     for (var key in element.comments) {
@@ -242,6 +193,7 @@ function renderComment(){
       commentUser.textContent = element.comments[key].user + ":\xa0 ";
       commentUser.classList += " commentUser";
 
+      // adds the span containing all of the commenting pieces
       commentSpan.appendChild(commentUser);
       commentSpan.appendChild(commentWriting);
       comments.appendChild(commentSpan);
@@ -260,10 +212,8 @@ function renderComment(){
   media.setAttribute("class", "mdl-card__media");
   video.setAttribute("controls", "true");
   video.setAttribute("preload", "auto");
-  video.setAttribute("width", "100%");  // should change
+  video.setAttribute("width", "100%");  
   video.setAttribute("height", "70%");
-  // console.log("element is: ");
-  // console.log(element);
   source.setAttribute('src', element.downloadURL);
   video.appendChild(source);
 
@@ -285,7 +235,6 @@ function renderComment(){
   var br = document.createElement("br");
   var description = "Description: " + element.title;
   var date = element.createdOn;
-  console.log(date);
   date = moment(date).fromNow();
   var br = document.createElement("br");
   var avatar = document.createElement("img");

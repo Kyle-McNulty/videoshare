@@ -11,7 +11,6 @@ firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         currentUser = user;
         loadPage(currentUser);
-        console.log(currentUser);
     } else {
         firebase.auth().signInWithRedirect(authProvider);
         window.location = "index.html";
