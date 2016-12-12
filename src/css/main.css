@@ -65,7 +65,7 @@ input:focus {
     }
 
     .indexBody {
-        background-image: url(/candide-background.jpg);
+        background-image: url(candide-background.jpg);
         
         background-size: cover;
         background-position: center;
