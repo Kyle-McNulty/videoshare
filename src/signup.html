@@ -11,6 +11,7 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
         <link rel="icon" href="img/page-icon.png">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster" >
         <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css" />
         <link rel="stylesheet" href="css/main.css">
 
@@ -25,6 +26,7 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
             <h1>Sign Up</h1>
             <p class="loading hidden">Loading...</p>
             <form id="signup-form">
+                            <p>Already have an account? <a href="index.html">Sign In</a></p>
                 <div>
                     <label for="email-input"></label>
                     <input id="email-input" type="email" placeholder="Email Address" autofocus>
@@ -49,14 +51,13 @@ Authors: Calvin Korver, Kyle McNulty, Patrick Yi
                     <textarea class="mdl-textfield__input" type="text" rows="3" id="bio-input" placeholder="Write a few lines about yourself..."></textarea>
                 </div>
 
-                <div>
+                <div class="submit-button">
                     <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
                             Submit
                     </button>
                 </div>
                 <span id="error-message"></span>
             </form>
-            <p>Already have an account? <a href="index.html">Sign In</a></p>
         </div>
     </body>
 </html>
