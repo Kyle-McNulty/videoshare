@@ -34,6 +34,9 @@ h1 {
     margin-bottom: 10px;
 }
 
+.delete-button {
+    margin: 15px;
+}
 
 .content-grid {
     max-width: 1300px;
@@ -210,6 +213,14 @@ video {
 #videos {
     vertical-align: middle;
 }
+/*
+.comment-form {
+    padding-left:20px
+}*/
+
+.comment-input {
+    padding-left: 15px;
+}
 
 .material-icons {
   font-family: 'Material Icons';
@@ -274,7 +285,7 @@ video {
 .commentUser {
     font-style: italic;
     color: #365899;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 }
 
 .commentSpan {

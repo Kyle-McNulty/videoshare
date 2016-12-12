@@ -133,8 +133,9 @@ function renderMovie(snapshot) {
   /* Creates the form for the comment inputs */
   var commentForm = document.createElement("form");
   commentForm.setAttribute("action", "#");
+  commentForm.setAttribute("class", "comment-form");
   var comment_div = document.createElement("div");
-  comment_div.setAttribute("class", "mdl-textfield mdl-js-textfield");
+  comment_div.setAttribute("class", "mdl-textfield mdl-js-textfield mdl-textfield--floating-label");
   // var comment_input_span = document.createElement("span");
   var comment_input = document.createElement("input");
 
@@ -182,6 +183,7 @@ function renderMovie(snapshot) {
   feedBackDiv.classList += " display";
 
   var comments = document.createElement("ul");
+  comments.setAttribute("class", "comment-input");
   if (element.comments) {
     for (var key in element.comments) {
       var commentSpan = document.createElement("span");
@@ -233,7 +235,7 @@ function renderMovie(snapshot) {
 
   var description = element.title;
   var br = document.createElement("br");
-  var description = "Description: " + element.title;
+  var description = "" + element.title;
   var date = element.createdOn;
   date = moment(date).fromNow();
   var br = document.createElement("br");
@@ -251,6 +253,7 @@ function renderMovie(snapshot) {
 
   /* Delete Button */
   var buttonDiv = document.createElement("div");
+  buttonDiv.setAttribute("class", "delete-button");
   var button = document.createElement("button");
   button.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised");
   button.innerHTML = "Delete";
