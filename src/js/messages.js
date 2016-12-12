@@ -83,12 +83,10 @@ function handleFiles(fileList) {
         },
         title: inputCaption,
         Fcount: 0,
-        favoriteUser: {
-
-        },
       };
       var item = personalRef.push(info);
-    })
+    })    // upload the file into storage
+
 
   } else {
     alert("You must verify your email before uploading");
