@@ -1,6 +1,8 @@
 /*
 Authors: Calvin Korver, Kyle McNulty, Patrick Yi
 This javascript class handles the main index.html file which is the main video feed
+
+The actual video feed is rendered out in mutual.js
 */
 
 var currentUser;
@@ -20,6 +22,13 @@ var fileInputText = document.getElementById('file_input_text');
 
 fileInput.addEventListener('change', changeInputText);
 fileInput.addEventListener('change', changeState);
+
+/* This is necessary for the upload function, which is code courtesy of someone else 
+ * Handles changing text on the material design lite upload selector
+ * 
+ * Courtesy of Alexander Gaziev from
+ * https://codepen.io/alexander-gaziev/pen/JdVQQm 
+ */
 
 function changeInputText() {
   var str = fileInput.value;
@@ -55,7 +64,6 @@ function handleFiles(fileList) {
     }
 
     var storageRef = storage.ref(currentUser.uid + "/" + file.name);
-
     var uploadTask = storageRef.put(file); // adding to the storage 
     inputCaption = getCaption(uploadTask);
 
@@ -78,6 +86,7 @@ function handleFiles(fileList) {
       };
       var item = personalRef.push(info);
     })    // upload the file into storage
+
 
   } else {
     alert("You must verify your email before uploading");
