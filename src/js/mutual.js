@@ -25,6 +25,7 @@ function getCaption(uploadTask) {
   dialogCap.showModal();
   cancelButton.addEventListener("click", function () {
     uploadTask.cancel();
+    spinner.classList.remove("is-active");
     dialogCap.close();
   });
 
