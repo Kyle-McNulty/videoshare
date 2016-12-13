@@ -16,3 +16,8 @@ Some of the technology we will use includes:
 4) While we have an idea of what we need to accomplish for this, we may have to use certain APIs like the File API or Blobs API to accomplish this. As we do more research in the coming days, we will narrow our focus on what we need to research and learn to properly execute our plan
 
 Team: Calvin Korver, Kyle McNulty, Patrick Yi
+
+# Final Product
+Here is our final page on github-pages!
+Check it out!
+https://surfinggrizzlybears.github.io/videoshare/src/signup.html
