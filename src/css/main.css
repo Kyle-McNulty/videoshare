@@ -134,6 +134,12 @@ button {
     margin: 10px;
 }
 
+#file-input-menu {
+    margin-bottom: 5px;
+}
+
+
+
 
 .mdl-layout__content {
     margin:30px;

@@ -34,7 +34,7 @@
 						Xtreme Videos
 					</span>
 					<div class="mdl-layout-spacer"></div>
-					<div class="file_input_div">
+					<div class="file_input_div mdl-cell--hide-phone">
 						<div id="file_input_text_div" class="mdl-textfield mdl-js-textfield textfield-demo">
 							<input class="file_input_text mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
 							<label class="mdl-textfield__label" for="file_input_text"></label>
@@ -42,11 +42,27 @@
 					</div>
 			</header>
 			
-			<!--This is the sidebar of the page-->
+						<!--This is the sidebar of the page-->
 			<div class="mdl-layout__drawer">
 				<img id="menu-logo" src="logo.png" alt="SKiing logo">
 				<span class="mdl-layout-title">Main Menu</span>
 				<nav class="mdl-navigation">
+					<!--This is where the upload button is in the mobile naviation mode-->
+ 						<div class="file_input_div mdl-cell--hide-tablet mdl-cell--hide-desktop" id="hamburger-file-upload">
+ 							<input class="mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
+ 							<label class="mdl-textfield__label" for="file_input_text"></label>
+ 						<div id="tt1" class="file_input">
+ 							<label onclick="uploadCaption()" class="uploadButton image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
+ 									<i class="material-icons ">file_upload</i>
+ 									
+ 									<!-- Simple Tooltip -->
+ 									<div class="mdl-tooltip" data-mdl-for="tt1">
+ 									Upload
+ 									</div>
+ 									<input id="file_input_file" class="none" type="file" onChange = "handleFiles(this.files)"/>
+ 							</label>
+ 						</div>
+					</div>
 					<a class="mdl-navigation__link" class="nav-button" id="feed-page-button" href="videos.html">Video Feed</a>
 					<a class="mdl-navigation__link" class="nav-button" id="profile-page-button" href="profile.html">My Profile</a>
 					<div id="signout-button">
