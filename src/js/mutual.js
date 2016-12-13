@@ -74,21 +74,21 @@ function likeHandler(element, snapshot) {
  var likedByUser = {user: currentUser.displayName}
   // if current user has already like this video, unlike the video
   if(element.likedBy){
-    var alreadyLiked = true;
+    var alreadyLiked = false;
     for (var key in element.likedBy) {
-      if (element.likedBy[key].user != currentUser.displayName) {
-        alreadyLiked = false;
-        countRef.set(element.Fcount + 1);
-        likedBy.push(likedByUser);
-      }
-    }
-    if(alreadyLiked) {
+      if (element.likedBy[key].user === currentUser.displayName) {
         countRef.set(element.Fcount - 1);
         likedBy.remove(likedBy.user);
+        alreadyLiked = true;
+      }
+    }
+    if(!alreadyLiked) {
+        countRef.set(element.Fcount + 1);
+        likedBy.push(likedByUser);
     }
    } else {
-    countRef.set(element.Fcount + 1);
-    likedBy.push(likedByUser);
+      countRef.set(element.Fcount + 1);
+      likedBy.push(likedByUser);
    }
 }
 
