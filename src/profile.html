@@ -47,22 +47,6 @@
 				<img id="menu-logo" src="logo.png" alt="SKiing logo">
 				<span class="mdl-layout-title">Main Menu</span>
 				<nav class="mdl-navigation">
-					<!--This is where the upload button is in the mobile naviation mode-->
- 						<div class="file_input_div mdl-cell--hide-tablet mdl-cell--hide-desktop" id="hamburger-file-upload">
- 							<input class="mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
- 							<label class="mdl-textfield__label" for="file_input_text"></label>
- 						<div id="tt1" class="file_input">
- 							<label onclick="uploadCaption()" class="uploadButton image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
- 									<i class="material-icons ">file_upload</i>
- 									
- 									<!-- Simple Tooltip -->
- 									<div class="mdl-tooltip" data-mdl-for="tt1">
- 									Upload
- 									</div>
- 									<input id="file_input_file" class="none" type="file" onChange = "handleFiles(this.files)"/>
- 							</label>
- 						</div>
-					</div>
 					<a class="mdl-navigation__link" class="nav-button" id="feed-page-button" href="videos.html">Video Feed</a>
 					<a class="mdl-navigation__link" class="nav-button" id="profile-page-button" href="profile.html">My Profile</a>
 					<div id="signout-button">
@@ -86,20 +70,35 @@
 			</main>
 			
 			<!--Dialog Box-->
-			<dialog class="mdl-dialog" id="delete-confirmation">
-				<h4 class="mdl-dialog__title">Delete?</h4>
-				<div class="mdl-dialog__content">
-					<p>
-						Are you sure you want to delete this video? You will not be able to reverse this action!
-					</p>
-				</div>
-				<div class="mdl-dialog__actions">
-					<button type="button" class="mdl-button delete" id="delete-it"> <i class="material-icons">delete</i>Delete
-					</button>
-					<button type="button" class="mdl-button close" id="keep-it">Cancel
-					</button>
-				</div>
-			</dialog>
+		<dialog class="mdl-dialog caption">
+			<div class="mdl-dialog__content">
+				<p>Enter your Description of the video here</p>
+				<form action="#">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" type="text" id="captionInput" />
+						<label class="mdl-textfield__label" for="description">Description</label>
+					</div>
+				</form>
+			</div>
+			<div class="mdl-dialog__actions">
+				<button type="button" class="mdl-button done" id="delete-it"> Done</button>
+				<button type="button" class="mdl-button cancel" id="keep-it">Cancel</button>
+			</div>
+		</dialog>
+
+		<dialog class="mdl-dialog deleteDialog" id="delete-confirmation">
+			<h4 class="mdl-dialog__title">Delete?</h4>
+			<div class="mdl-dialog__content">
+				<p>
+					Are you sure you want to delete this video? You will not be able to reverse this action!
+				</p>
+			</div>
+			<div class="mdl-dialog__actions">
+				<button type="button" class="mdl-button delete" id="delete-it"> <i class="material-icons">delete</i>Delete</button>
+
+				<button type="button" class="mdl-button close" id="keep-it">Cancel</button>
+			</div>
+		</dialog>
 	</body>
 </html>
 
