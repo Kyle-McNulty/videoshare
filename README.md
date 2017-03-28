@@ -20,4 +20,4 @@ Team: Calvin Korver, Kyle McNulty, Patrick Yi
 # Final Product
 Here is our final page on github-pages!
 Check it out!
-https://surfinggrizzlybears.github.io/videoshare/src/signup.html
+https://kyle-mcnulty.github.io/videoshare/src/signup.html
